@@ -112,9 +112,14 @@ class CourseDescriptionPage extends Component {
         this.setState({ exclusions: total_exreq })
 
         let syllabus_link = "http://courses.skule.ca/course/" + this.props.code
-        this.setState({ syllabus: syllabus_link })
+        syllabus_link = undefined;
+        this.setState({syllabus : syllabus_link})
 
-        let temp_graph = [];
+        if(!syllabus_link){
+          this.setState({requestCount : 5});
+        }
+
+        let temp_graph = []
         //temp_graph.push(<ShowGraph graph_src={this.state.graph}></ShowGraph>)
         
         this.setState({ graphics: temp_graph })
@@ -199,10 +204,16 @@ class CourseDescriptionPage extends Component {
               <p>{this.state.department}</p>
             </Col>
             <Col className="col-item">
-              <h3>Past Tests and Syllabi</h3>
-              <button className={"syllabus-link"} onClick={this.openLink}>
-                View
-              </button>
+              <h3>Course Syllabus</h3>
+              { this.state.syllabus ?
+                <button className={"syllabus-link"} onClick={this.openLink}>View</button> :
+                <div className='syllabus-request'>
+                  <button className={"syllabus-link"} onClick={this.openLink}>Request</button>
+                  <span className={"request-counter"} title="Number of requests made for this course">
+                    {this.state.requestCount}
+                  </span>
+                </div>
+              }
             </Col>
           </Row>
           <Row className="col-item course-description">

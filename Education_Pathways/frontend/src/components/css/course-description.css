@@ -95,3 +95,21 @@ p {
   justify-content: center;
   margin-bottom: 2%;
 }
+
+.syllabus-request {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.syllabus-request span {
+  color: white;
+  background-color: grey;
+  margin: 0 10px;
+  width: 3em;
+  line-height: 3em;
+  border-radius: 50%;
+  font-size: 1.2em;
+  margin-top: 2%;
+  letter-spacing: normal !important;
+}
