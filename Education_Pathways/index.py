@@ -22,13 +22,13 @@ import controller
 api = Api(app)
 
 api.add_resource(controller.SearchCourse, '/searchc')
-api.add_resource(controller.ShowCourse, '/course/details')
-api.add_resource(controller.ShowCourseGraph, '/course/graph')
+# api.add_resource(controller.ShowCourse, '/course/details')
+# api.add_resource(controller.ShowCourseGraph, '/course/graph')
 
-api.add_resource(controller.UserWishlist, '/user/wishlist')
-api.add_resource(controller.UserWishlistAdd, '/user/wishlist/addCourse')
-api.add_resource(controller.UserWishlistRemove, '/user/wishlist/removeCourse')
-api.add_resource(controller.UserWishlistMinorCheck, '/user/wishlist/minorCheck')
+# api.add_resource(controller.UserWishlist, '/user/wishlist')
+# api.add_resource(controller.UserWishlistAdd, '/user/wishlist/addCourse')
+# api.add_resource(controller.UserWishlistRemove, '/user/wishlist/removeCourse')
+# api.add_resource(controller.UserWishlistMinorCheck, '/user/wishlist/minorCheck')
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')
