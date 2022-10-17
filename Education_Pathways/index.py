@@ -20,8 +20,6 @@ config.init_cors(app)
 # API Endpoints
 import controller
 api = Api(app)
-api.add_resource(controller.UserRegistration, '/user/register')
-api.add_resource(controller.UserLogin, '/user/login')
 
 api.add_resource(controller.SearchCourse, '/searchc')
 api.add_resource(controller.ShowCourse, '/course/details')
