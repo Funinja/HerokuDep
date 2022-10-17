@@ -3,36 +3,23 @@
 from flask import jsonify, request
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
-from config import app
-from model import *
-from fuzzy import nysiis
-import re
+from config import app, list_of_course_strings
+from rapidfuzz import process, fuzz
+from model import searchschema
 
 
 # -------------------- Course related --------------------
 class SearchCourse(Resource):
     def get(self):
+        searchschema.validate(request.args)
         input = request.args.get('input')
-        code = re.findall('[a-zA-Z]{3}\d{3}[hH]?\d?', input)
-        if code:
-            code = code[0].upper()
-            if len(code) == 6:
-                code += 'H1'
-            elif len(code) == 5:
-                code += '1'
-            if Course.objects(code=code):
-                try:
-                    resp = jsonify({'course': Course.get(code)})
-                    resp.status_code = 200
-                    return resp
-                except Exception as e:
-                    resp = jsonify({'error': 'something went wrong'})
-                    resp.status_code = 400
-                    return resp
-        input = ' '.join([nysiis(w) for w in input.split()])
+        if len(input) < 4:
+            resp.status_code = 200
+            return resp
         try:
-            search = Course.objects.search_text(input).order_by('$text_score')
-            resp = jsonify(search)
+            list_of_best_matches = process.extract(input, list_of_course_strings, limit=5, scorer=fuzz.partial_ratio)
+            print(list_of_best_matches)
+            resp = jsonify(list_of_best_matches)
             resp.status_code = 200
             return resp
         except Exception as e:
@@ -40,37 +27,6 @@ class SearchCourse(Resource):
             resp.status_code = 400
             return resp
 
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('input', required=True)
-        data = parser.parse_args()
-        input = data['input']
-        code = re.findall('[a-zA-Z]{3}\d{3}[hH]?\d?', input)
-        if code:
-            code = code[0].upper()
-            if len(code) == 6:
-                code += 'H1'
-            elif len(code) == 5:
-                code += '1'
-            if Course.objects(code=code):
-                try:
-                    resp = jsonify({'course': Course.get(code)})
-                    resp.status_code = 200
-                    return resp
-                except Exception as e:
-                    resp = jsonify({'error': 'something went wrong'})
-                    resp.status_code = 400
-                    return resp
-        input = ' '.join([nysiis(w) for w in input.split()])
-        try:
-            search = Course.objects.search_text(input).order_by('$text_score')
-            resp = jsonify(search)
-            resp.status_code = 200
-            return resp
-        except Exception as e:
-            resp = jsonify({'error': 'something went wrong'})
-            resp.status_code = 400
-            return resp
 
 # class ShowCourse(Resource):
 #     def get(self):
@@ -288,4 +244,3 @@ class SearchCourse(Resource):
 #             resp = jsonify({'error': 'something went wrong'})
 #             resp.status_code = 400
 #             return resp
-            
