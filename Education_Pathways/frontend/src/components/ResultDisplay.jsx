@@ -12,7 +12,8 @@ class SearchResultDisplay extends Component{
     super();
     this.state = {
       input: "",
-      results: []
+      results: [],
+      error: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,7 +29,7 @@ class SearchResultDisplay extends Component{
   }
 
   getData = (input) => {
-    axios.get(`https://assignment-1-starter-template.herokuapp.com/searchc?input=${input}`)
+    axios.get(`https://floating-cliffs-54153.herokuapp.com/searchc?input=${input}`)
       .then(res => {
         console.log(`it is ${res.status}`)
         if (res.status === 200) {
@@ -39,22 +40,30 @@ class SearchResultDisplay extends Component{
             let result_temp = []
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
-                result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
+                console.log(res.data[i])
+                result_temp.push(<Result course_code={res.data[i][0].slice(0, 8)} course_name={res.data[i][0].slice(9)}></Result>)
             }
-            this.setState({results: result_temp})
+            this.setState({results: result_temp, error : 0})
           } else if (res.data.length === 0) {
             alert("Course not found")
           }else {
             let result_temp = []
             result_temp.push(<Label></Label>)
             result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
-            this.setState({results: result_temp})
+            this.setState({results: result_temp, error : 0})
           }
 
         } else if (res.status === 400) {
           alert("System Error. Please refresh")
-        }
-    })
+        } 
+    }).catch(
+
+      error => {
+        console.log(error)
+        this.setState({error : 1})
+      }
+
+    )
   }
 
   // search_render = (input) => {
@@ -104,7 +113,10 @@ We are looking for feedback to improve Education Pathways and make it more usefu
         </div>
 
         <div className={"search-result-display"} >
-            {this.state.results}
+            {this.state.error == 1 ? 
+              <h1>No such courses exist</h1>
+              :
+              this.state.results}
         </div>
 
        
