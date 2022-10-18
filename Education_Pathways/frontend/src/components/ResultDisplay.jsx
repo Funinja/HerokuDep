@@ -42,16 +42,20 @@ class SearchResultDisplay extends Component{
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
                 console.log(res.data[i])
-                result_temp.push(<Result course_code={res.data[i][0].slice(0, 8)} course_name={res.data[i][0].slice(9)}></Result>)
+                if(input === res.data[i][0].slice(0, input.length)){
+                  result_temp.push(<Result course_code={res.data[i][0].slice(0, 8)} course_name={res.data[i][0].slice(9)}></Result>)
+                }
             }
-            this.setState({results: result_temp, error : 0})
+            if(result_temp.length === 1){
+              this.setState({result : [], error : 1})
+            }else{
+              this.setState({results: result_temp, error : 0})
+            }
           } else if (res.data.length === 0) {
             alert("Course not found")
           }else {
             let result_temp = []
-            result_temp.push(<Label></Label>)
-            result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
-            this.setState({results: result_temp, error : 0})
+            this.setState({results: result_temp, error : 1})
           }
 
         } else if (res.status === 400) {
