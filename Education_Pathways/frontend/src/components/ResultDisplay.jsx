@@ -30,20 +30,31 @@ class SearchResultDisplay extends Component{
   }
 
   getData = (input) => {
-    axios.get(`https://floating-cliffs-54153.herokuapp.com/searchc?input=${input}`)
+    axios.get(`http://127.0.0.1:5000/searchc?input=${input}&numResults=5`)
       .then(res => {
         console.log(`it is ${res.status}`)
         if (res.status === 200) {
           this.setState({results: []})
+
+          console.log(res.data["courses"])
+          let course_prob = res.data["courses"]
+          let course_names = res.data["names"]
+          let courses = []
           
-          if (res.data.length > 0) {
-            let len = res.data.length
+          for(let i = 0; i < course_prob.length ; i++){
+            courses.push(course_prob[i][0])
+          }
+          
+          console.log(courses)
+
+          if (courses.length > 0) {
+            let len = courses.length
             let result_temp = []
+            
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
-                console.log(res.data[i])
-                if(input === res.data[i][0].slice(0, input.length)){
-                  result_temp.push(<Result course_code={res.data[i][0].slice(0, 8)} course_name={res.data[i][0].slice(9)}></Result>)
+                if(input === courses[i].slice(0, input.length)){
+                  result_temp.push(<Result course_code={courses[i]} course_name={course_names[i]}></Result>)
                 }
             }
             if(result_temp.length === 1){
@@ -118,7 +129,7 @@ We are looking for feedback to improve Education Pathways and make it more usefu
         </div>
 
         <div className={"search-result-display"} >
-            {this.state.error == 1 ? 
+            {this.state.error === 1 ? 
               <h1>No such courses exist</h1>
               :
               this.state.results}

@@ -3,7 +3,7 @@
 from flask import jsonify, request
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
-from config import app, list_of_course_strings
+from config import app, list_of_course_strings, client, course_to_name
 from rapidfuzz import process, fuzz
 from model import searchschema
 
@@ -13,20 +13,34 @@ class SearchCourse(Resource):
     def get(self):
         searchschema.validate(request.args)
         input = request.args.get('input')
+        numResults = request.args.get('numResults')
+
+        return_limit = 5
+
+        if(numResults):
+            return_limit = int(numResults)
+
+        print(return_limit)
+
         if len(input) < 4:
             resp.status_code = 200
             return resp
         try:
-            list_of_best_matches = process.extract(input, list_of_course_strings, limit=5, scorer=fuzz.partial_ratio)
+            list_of_best_matches = process.extract(input, list_of_course_strings, limit=return_limit, scorer=fuzz.partial_ratio)
             print(list_of_best_matches)
-            resp = jsonify(list_of_best_matches)
+            print(course_to_name)
+            course_names = []
+            for match in list_of_best_matches:
+                print(match[0])
+                course_names.append(course_to_name[match[0]])
+
+            resp = jsonify(courses=list_of_best_matches, names=course_names)
             resp.status_code = 200
             return resp
         except Exception as e:
             resp = jsonify({'error': 'something went wrong'})
             resp.status_code = 400
             return resp
-
 
 # class ShowCourse(Resource):
 #     def get(self):
