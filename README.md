@@ -1,11 +1,13 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8529947&assignment_repo_type=AssignmentRepo)
-# Assignment 1: Education Pathway
+# Coursify - A Course Planning Tool
+## Project Management
+Jira is used in order to manage our project, and can be found [HERE](https://ece444team5.atlassian.net/jira/software/projects/CRS/boards/1). In order to access, you must be signed in using a utoronto.ca account.
 
-This repository host the source code for Education Pathway project. You can view the online deployed version [here](https://assignment-1-starter-template.herokuapp.com/). We are using this repo as a starting point for assignment 1.
 
+# Project Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) for frontend, and [Flask-tdd](https://github.com/mjhea0/flaskr-tdd) for backend.
-
+We will be using MongoDB to host our database.
 
 ## 0. Before the project
 

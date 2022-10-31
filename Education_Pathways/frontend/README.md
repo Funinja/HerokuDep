@@ -1,3 +1,9 @@
+# Coursify - A Course Planning Tool
+## Project Management
+Jira is used in order to manage our project, and can be found [HERE](https://ece444team5.atlassian.net/jira/software/projects/CRS/boards/1). In order to access, you must be signed in using a utoronto.ca account.
+
+This repo is built on top of https://github.com/ECE444-2022Fall/Assignment_1_starter_template.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
