@@ -3,6 +3,7 @@
 from flask import jsonify, request
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
+import bson.json_util as json_util
 from config import app, list_of_course_strings, client, course_to_name
 from rapidfuzz import process, fuzz
 from model import searchschema
@@ -20,24 +21,54 @@ class SearchCourse(Resource):
         if(numResults):
             return_limit = int(numResults)
 
-        print(return_limit)
-
         if len(input) < 4:
             resp.status_code = 200
             return resp
         try:
             list_of_best_matches = process.extract(input, list_of_course_strings, limit=return_limit, scorer=fuzz.partial_ratio)
-            print(list_of_best_matches)
-            print(course_to_name)
+            # print(list_of_best_matches)
+            # print(course_to_name)
             course_names = []
             for match in list_of_best_matches:
-                print(match[0])
                 course_names.append(course_to_name[match[0]])
 
             resp = jsonify(courses=list_of_best_matches, names=course_names)
             resp.status_code = 200
             return resp
         except Exception as e:
+            resp = jsonify({'error': 'something went wrong'})
+            resp.status_code = 400
+            return resp
+
+class SearchList(Resource):
+    def get(self):
+        courses = []
+        course_max = 0
+        counter = 0
+        while not course_max:
+            c = request.args.get('courses[{}]'.format(counter))
+            counter += 1
+            if not c:
+                course_max = 1
+            else:
+                courses.append(c)
+        course_query = []
+        for course in courses:
+            course_query.append({"Course Code" : course})
+        try:
+            db = client.courses
+            coll = db.get_collection('engineering')
+            course_description = list(coll.find({
+                "$or": course_query
+            }))
+            cd = json_util.dumps(course_description)
+            print(cd)
+            resp = jsonify(course_descriptions=cd)
+            resp.status_code = 200
+
+            return resp
+        except Exception as e:
+            print(e)
             resp = jsonify({'error': 'something went wrong'})
             resp.status_code = 400
             return resp

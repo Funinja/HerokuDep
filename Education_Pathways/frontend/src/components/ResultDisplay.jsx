@@ -4,7 +4,7 @@ import Result from './Results'
 import './css/Result.css'
 import Label from './Label'
 import "./css/styles.css";
-
+import { withRouter } from "react-router-dom";
 
 class SearchResultDisplay extends Component{
 
@@ -24,9 +24,9 @@ class SearchResultDisplay extends Component{
     this.getData(event.target.value)
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-    this.getData(this.state.input)
+    this.props.history.push(`/searchLists/${this.state.input}`);
   }
 
   getData = (input) => {
@@ -144,4 +144,4 @@ We are looking for feedback to improve Education Pathways and make it more usefu
   
 }
 
-export default SearchResultDisplay;
+export default withRouter(SearchResultDisplay);

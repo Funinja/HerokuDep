@@ -9,6 +9,7 @@ import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
 // import SignUp from './SignUp'
 import SearchResultDisplay from './ResultDisplay'
+import SearchList from './SearchDisplay'
 
 function CourseDescription (props) {
   let query = useQuery();
@@ -100,6 +101,10 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route exact
               path="/courseDetails/:code"
               render={props =>(<CourseDescriptionPage {...props} />)}>
+            </Route>
+            <Route exact
+              path="/searchLists/:input"
+              render={props =>(<SearchList {...props} />)}>
             </Route>
             <Route path="/">
               <SearchResultDisplay />
