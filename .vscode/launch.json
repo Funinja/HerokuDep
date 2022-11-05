@@ -5,6 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Chrome Debugger",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/Education_Pathways/frontend/src/"
+        },
+        {
+            "name": "Start Frontend",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Education_Pathways/frontend",
+            "runtimeArgs": [
+                "start",
+                "debug"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "name": "Run Flask",
             "type": "python",
             "request": "launch",
@@ -15,19 +36,10 @@
             },
             "args": [
                 "run",
-                "--no-debugger",
-                "--no-reload"
+                "--no-debugger"
             ],
             "jinja": true,
             "justMyCode": true
-        }
+        },
     ]
 }
-
-// {
-//     "configurations":[
-//         {"scripts":{
-//             "build":"cd ./EducationPathways/frontend/ && npm start"
-//         }
-//     ]
-// }
