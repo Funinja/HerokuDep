@@ -11,6 +11,7 @@ cors = None
 list_of_course_strings = None
 course_to_name = {}
 course_to_dep = {}
+course_to_div = {}
 
 def init_app(app_):
     global app
@@ -19,6 +20,13 @@ def init_app(app_):
     csvreader = csv.reader(d_file)
     for row in csvreader:
         course_to_dep[row[0]] = row[1]
+    d_file.close()
+
+    d_file = open('divisions.csv')
+    csvreader = csv.reader(d_file)
+    for row in csvreader:
+        course_to_div[row[0]] = row[1]
+    d_file.close()
 
     return app
 
