@@ -14,6 +14,8 @@ class SearchDisplay extends Component{
     super(props);
     this.state = {
       input: props.match.params.input,
+      filterLevel : props.location.state.filterLevel,
+      filterDepartment : props.location.state.filterDepartment,
       course_codes: [],
       course_names: [],
       results: [],
@@ -21,7 +23,27 @@ class SearchDisplay extends Component{
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.getCodes(this.state.input);
+    let d = props.location.state.filterDepartment;
+    let f = props.location.state.filterLevel;
+
+    console.log(f)
+
+    let simp_d = []
+    if (d){
+      for(let i = 0; i < d.length; i++){
+        simp_d.push(d[i]['value'])
+      }
+    }
+
+    let simp_f = []
+    if(f){
+      for(let i = 0; i < f.length; i++){
+        simp_f.push(f[i]['value'])
+      }
+    }
+
+
+    this.getCodes(this.state.input, simp_d, simp_f);
   }
 
   redirectCourse = (course) => {
@@ -41,7 +63,9 @@ class SearchDisplay extends Component{
   getDescriptions = (courses) =>{
     axios.get(`http://127.0.0.1:5000/course/descriptions`, {
       params: {
-        courses: courses
+        courses: courses,
+        filterDepartment: this.state.filterDepartment,
+        filterLevel: this.state.filterLevel
       },
       paramsSerializer: params => {
         return qs.stringify(params)
@@ -79,8 +103,18 @@ class SearchDisplay extends Component{
   }
 
 
-  getCodes = async (input) => {
-    axios.get(`http://127.0.0.1:5000/searchc?input=${input}&numResults=5`)
+  getCodes = async (input, filterDepartment, filterLevel) => {
+    axios.get(`http://127.0.0.1:5000/searchc`, {
+      params:{
+        input: input, 
+        numResults: 10,
+        filterDepartment: filterDepartment,
+        filterLevel: filterLevel
+      },
+      paramsSerializer: params => {
+        return qs.stringify(params)
+      }
+    })
       .then(res => {
         if (res.status === 200) {
           this.setState({results: []})
@@ -89,8 +123,8 @@ class SearchDisplay extends Component{
           let course_names = res.data["names"]
           let courses = []
           for(let i = 0; i < course_prob.length ; i++){
-            if(input === course_prob[i][0].slice(0, input.length)){
-              courses.push(course_prob[i][0])
+            if(input === course_prob[i].slice(0, input.length)){
+              courses.push(course_prob[i])
             }
           }
 

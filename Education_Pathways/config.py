@@ -3,16 +3,23 @@
 from pymongo import MongoClient
 import os
 from flask_cors import CORS
+import csv
 
 app = None
 client = None
 cors = None
 list_of_course_strings = None
 course_to_name = {}
+course_to_dep = {}
 
 def init_app(app_):
     global app
     app = app_
+    d_file = open('departments.csv')
+    csvreader = csv.reader(d_file)
+    for row in csvreader:
+        course_to_dep[row[0]] = row[1]
+
     return app
 
 def init_db(app):
