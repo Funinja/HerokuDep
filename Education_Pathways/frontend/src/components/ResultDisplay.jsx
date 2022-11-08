@@ -94,13 +94,15 @@ class SearchResultDisplay extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.history.push({
-      pathname: `/searchLists/${this.state.input}`,
-      state: { 
-        filterDepartment : this.state.filterDepartment,
-        filterLevel: this.state.filterLevel
-      }
-    });
+    if(this.state.input.length > 1){
+      this.props.history.push({
+        pathname: `/searchLists/${this.state.input}`,
+        state: { 
+          filterDepartment : this.state.filterDepartment,
+          filterLevel: this.state.filterLevel
+        }
+      });
+    }
   }
 
 

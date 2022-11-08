@@ -8,6 +8,7 @@ import requisite_label from './img/requisite-label.png'
 import empty_star from './img/star.png'
 import starred from './img/starred.png'
 import axios from "axios"
+import qs from "qs";
 
 let star = empty_star;
 
@@ -19,8 +20,8 @@ class CourseDescriptionPage extends Component {
     this.state = {
       course_code: "",
       course_name: "",
-      division: "Faculty of Applied Science and Engineering",
-      department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
+      division: "",
+      department: "",
       graph : "",
       course_description: "",
       syllabus: "",
@@ -38,54 +39,75 @@ class CourseDescriptionPage extends Component {
   componentDidMount() {
     console.log("pass in course code: ", this.props.match.params.code)
 
-    axios.get(`https://assignment-1-starter-template.herokuapp.com/course/details?code=${this.props.match.params.code}`, {
-      code: this.props.course_code
+    axios.get(`http://127.0.0.1:5000/course/descriptions`, {
+      params:{
+        courses: [this.props.match.params.code],
+      },
+      paramsSerializer: params => {
+        return qs.stringify(params)
+      }
     })
       .then(res => {
         console.log(res.data)
-        this.setState({course_code: res.data.course.code})
-        this.setState({course_name: res.data.course.name})
-        this.setState({course_description : res.data.course.description})
-        this.setState({graph: res.data.course.graph})
-        let prereq_len = res.data.course.prereq.length
-        if (prereq_len > 1) {
-          let prereq_str = ""
-          for (let i = 0; i < prereq_len; i++) {
-            prereq_str += res.data.course.prereq[i]
-            if (i !== prereq_len - 1) {
-              prereq_str += ", "
-            }
+        let json_dump = res.data["course_descriptions"]
+        let json = JSON.parse(json_dump)
+        let course_info = json[0]
+
+        this.setState({course_code: course_info["Course Code"]})
+        this.setState({course_name: course_info["Course Name"]})
+        this.setState({division: course_info["Division"]})
+        this.setState({department: course_info["Department"]})
+
+        this.setState({course_description : course_info["Details"]})
+
+        let pre_str = course_info["Prerequisites"].slice(1, -1)
+        let prereq = pre_str.split(", ")
+
+        let total_prereq = ""
+        for (let i = 0; i < prereq.length; i++){
+          prereq[i] = prereq[i].slice(1,-1);
+          total_prereq += prereq[i]
+          if (i < prereq.length - 1){
+            total_prereq += ", "
           }
-          this.setState({prerequisites : prereq_str})
-        } else {
-          this.setState({prerequisites : res.data.course.prereq})
         }
-        let coreq_len = res.data.course.coreq.length
-        if (coreq_len > 1) {
-          let coreq_str = ""
-          for (let i = 0; i < coreq_str; i++) {
-            coreq_str += res.data.course.coreq[i]
-            if (i !== coreq_len - 1) {
-              coreq_str += ", "
-            }
+
+        this.setState({prerequisites : total_prereq})
+
+        let co_str = course_info["Corequisites"].slice(1, -1)
+        let co_req = co_str.split(", ")
+
+        let total_coreq = ""
+        console.log("here", co_req)
+        for (let i = 0; i < co_req.length; i++){
+          co_req[i] = co_req[i].slice(1,-1);
+          total_coreq += co_req[i]
+          if (i < co_req.length - 1){
+            total_coreq += ", "
           }
-          this.setState({corequisites : coreq_str})
-        } else {
-          this.setState({corequisites : res.data.course.coreq})
         }
-        let exclusion_len = res.data.course.exclusion.length
-        if (exclusion_len > 1) {
-          let exclusion_str = ""
-          for (let i = 0; i < exclusion_str; i++) {
-            exclusion_str += res.data.course.exclusion[i]
-            if (i !== exclusion_len - 1) {
-              exclusion_str += ", "
-            }
+
+        console.log(total_coreq)
+
+        this.setState({corequisites : total_coreq})
+
+        let ex_str = course_info["Exclusion"].slice(1, -1)
+        let ex_req = ex_str.split(", ")
+
+        let total_exreq = "";
+        for(let i = 0; i < ex_req.length; i++){
+          ex_req[i] = ex_req[i].slice(1, -1)
+          total_exreq += ex_req[i]
+          if (i < ex_req.length - 1){
+            total_exreq += ", "
           }
-          this.setState({exclusions : exclusion_str})
-        } else {
-          this.setState({exclusions : res.data.course.exclusion})
         }
+
+        console.log("here", total_exreq)
+        
+
+        this.setState({exclusions : total_exreq})
+        
         let syllabus_link = "http://courses.skule.ca/course/" + this.props.code
         this.setState({syllabus : syllabus_link})
 
@@ -156,12 +178,6 @@ class CourseDescriptionPage extends Component {
                 <h4>Exclusion</h4>
                 <p>{this.state.exclusions}</p>
               </Col>
-            </Row>
-            <Row>
-              <div className={"req-graph"}>
-                <img style={{width: "70%", marginBottom: "3%"}} alt="" src={requisite_label}></img>
-                <img src={`data:image/jpeg;base64,${this.state.graph}`} alt="" ></img>
-              </div>
             </Row>
           </Row>
         </Container>
