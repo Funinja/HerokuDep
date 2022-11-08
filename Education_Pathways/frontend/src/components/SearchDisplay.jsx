@@ -87,6 +87,7 @@ class SearchDisplay extends Component{
           result_temp.push(<p>Details: {json[i]["Details"]}</p>)
           result_temp.push(<p>Prerequisites: {json[i]["Prerequisites"]}</p>)
           result_temp.push(<p>Recommended Preparation: {json[i]["Recommended Preparation"]}</p>)
+          result_temp.push(<p>Department: {json[i]["Department"]}</p>)
           result_list.push(<a href={`../courseDetails/${json[i]["Course Code"]}`} style={{textDecoration: "none"}}>
             {result_temp}
           </a>)

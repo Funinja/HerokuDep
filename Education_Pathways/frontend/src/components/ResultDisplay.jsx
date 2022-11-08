@@ -44,10 +44,10 @@ class SearchResultDisplay extends Component{
   }
 
   handleChange(event) {
+    event.preventDefault();
     this.setState({input: event.target.value});
     let dep_filt_val = [];
     console.log("handling change")
-
 
     if (this.state.filterDepartment){
 
@@ -67,16 +67,29 @@ class SearchResultDisplay extends Component{
 
     console.log(dep_filt_val)
 
-    this.getData(event.target.value, dep_filt_val, lev_filt_val)
+    if(event.target.value.length > 1){
+      this.getData(event.target.value, dep_filt_val, lev_filt_val);
+    }
   }
 
   handleChangeLevel(selected) {
 
     this.setState({
-      filterLevel: selected
+      filterLevel: selected,
+      results: [],
+      error : 0
     });
     console.log(selected)
 
+  }
+
+  handleDepChange = (selected) => {
+    this.setState({
+      filterDepartment: selected,
+      results: [],
+      error : 0
+    });
+    console.log(selected)
   }
 
   handleSubmit = (event) => {
@@ -90,12 +103,6 @@ class SearchResultDisplay extends Component{
     });
   }
 
-  handleDepChange = (selected) => {
-    this.setState({
-      filterDepartment: selected
-    });
-    console.log(selected)
-  }
 
   getData = (input, filterDepartment, filterLevel) => {
     axios.get(`http://127.0.0.1:5000/searchc`,{
@@ -119,6 +126,7 @@ class SearchResultDisplay extends Component{
           let course_prob = res.data["courses"]
           let course_names = res.data["names"]
           let courses = []
+
           
           for(let i = 0; i < course_prob.length ; i++){
             courses.push(course_prob[i])
