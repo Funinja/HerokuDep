@@ -48,9 +48,8 @@ class SearchCourse(Resource):
             return_limit = int(numResults)
 
         try:
+            print(input)
             list_of_best_matches = process.extract(input, list_of_course_strings, limit=100, scorer=fuzz.partial_ratio)
-
-            # print(list_of_best_matches)
             # print(course_to_name)
 
             matches = []
@@ -86,7 +85,6 @@ class SearchCourse(Resource):
             list_of_best_matches = list_of_best_matches[:int(numResults)] # minimize results returned
 
             print(list_of_best_matches)
-
             resp = jsonify(courses=list_of_best_matches, names=course_names)
             resp.status_code = 200
             return resp
@@ -117,6 +115,11 @@ class SearchList(Resource):
             course_description = list(coll.find({
                 "$or": course_query
             }))
+
+            for i in range(len(course_description)):
+                if course_description[i]["Course Code"] in course_to_dep:
+                    course_description[i]["Department"] = course_to_dep[course_description[i]["Course Code"]]
+
             cd = json_util.dumps(course_description)
             # print(cd)
             resp = jsonify(course_descriptions=cd)
