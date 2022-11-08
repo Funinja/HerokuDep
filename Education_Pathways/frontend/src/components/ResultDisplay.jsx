@@ -2,9 +2,30 @@ import React, { Component } from "react";
 import axios from 'axios'
 import Result from './Results'
 import './css/Result.css'
+import './css/dropdown.css'
 import Label from './Label'
 import "./css/styles.css";
+import qs from "qs";
+import {depOptions} from './DepOptions';
+import {filtOptions} from './FiltOptions';
 import { withRouter } from "react-router-dom";
+import Select from 'react-select';
+
+import { components } from "react-select";
+
+Option = (props) => {
+    return (
+        <div>
+            <components.Option{...props}>
+                <input
+                type="checkbox"
+                checked={props.isSelected}
+                onChange={() => null} /> {" "}
+                <label> {props.label} </label>
+            </components.Option>
+        </div>
+    )
+};
 
 class SearchResultDisplay extends Component{
 
@@ -13,26 +34,91 @@ class SearchResultDisplay extends Component{
     this.state = {
       input: "",
       results: [],
-      error: 0
+      error: 0,
+      filterLevel: null,
+      filterDepartment: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeLevel = this.handleChangeLevel.bind(this);
   }
 
   handleChange(event) {
+    event.preventDefault();
     this.setState({input: event.target.value});
-    this.getData(event.target.value)
+    let dep_filt_val = [];
+    console.log("handling change")
+
+    if (this.state.filterDepartment){
+
+      for (let i = 0; i < this.state.filterDepartment.length; i++) {
+        dep_filt_val.push(this.state.filterDepartment[i]['value'])
+      }
+
+    }
+    let lev_filt_val = [];
+
+    if(this.state.filterLevel){
+      
+      for (let i = 0; i < this.state.filterLevel.length; i++) {
+        lev_filt_val.push(this.state.filterLevel[i]['value'])
+      }
+    }
+
+    console.log(dep_filt_val)
+
+    if(event.target.value.length > 1){
+      this.getData(event.target.value, dep_filt_val, lev_filt_val);
+    }
+  }
+
+  handleChangeLevel(selected) {
+
+    this.setState({
+      filterLevel: selected,
+      results: [],
+      error : 0
+    });
+    console.log(selected)
+
+  }
+
+  handleDepChange = (selected) => {
+    this.setState({
+      filterDepartment: selected,
+      results: [],
+      error : 0
+    });
+    console.log(selected)
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.history.push(`/searchLists/${this.state.input}`);
+    this.props.history.push({
+      pathname: `/searchLists/${this.state.input}`,
+      state: { 
+        filterDepartment : this.state.filterDepartment,
+        filterLevel: this.state.filterLevel
+      }
+    });
   }
 
-  getData = (input) => {
-    axios.get(`http://127.0.0.1:5000/searchc?input=${input}&numResults=5`)
+
+  getData = (input, filterDepartment, filterLevel) => {
+    axios.get(`http://127.0.0.1:5000/searchc`,{
+      params: {
+        input: input,
+        numResults: 5,
+        filterDepartment : filterDepartment,
+        filterLevel:filterLevel
+      },
+      paramsSerializer: params => {
+        return qs.stringify(params)
+      }
+    })
       .then(res => {
         console.log(`it is ${res.status}`)
+        console.log(this.state.filterDepartment)
         if (res.status === 200) {
           this.setState({results: []})
 
@@ -40,9 +126,10 @@ class SearchResultDisplay extends Component{
           let course_prob = res.data["courses"]
           let course_names = res.data["names"]
           let courses = []
+
           
           for(let i = 0; i < course_prob.length ; i++){
-            courses.push(course_prob[i][0])
+            courses.push(course_prob[i])
           }
           
           console.log(courses)
@@ -82,31 +169,7 @@ class SearchResultDisplay extends Component{
     )
   }
 
-  // search_render = (input) => {
-
-  //   <div className="SearchQuery">
-  //       <div style={{ marginTop: "10%" }}>
-  //           <h1> Education Pathways Search</h1>
-  //           <br></br>
-  //           <form onSubmit={this.handleSubmit} className={"search"}>
-  //               <input placeholder={"Search for course code, course name, keyword ..."} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
-  //               <input type="submit" value="Submit" className={"submit-button"}/>
-  //           </form>
-  //       </div>
-
-  //       <div className={"search-result-display"} >
-  //           {this.state.results}
-  //       </div>
-
-       
-  //     </div>
-
-
-
-
-
-  // }
-
+  
   render(){
     return (
       <div className="SearchQuery">
@@ -125,6 +188,27 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <form onSubmit={this.handleSubmit} className={"search"}>
                 <input placeholder={"Search for course code, course name, keyword ..."} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
                 <input type="submit" value="Search" className={"submit-button"}/>
+                <div className="dropdown_dep">
+                  <h4>Department</h4>
+                  <Select 
+                    options={depOptions}
+                    onChange={this.handleDepChange}
+                    isMulti
+                    
+                  />
+                  
+                </div>
+                <div className="dropdown_level">
+                  <h4>Level</h4>
+                  <Select 
+                    options={filtOptions}
+                    onChange={this.handleChangeLevel}
+                    isMulti
+                    
+                  />
+                  
+                </div>
+
             </form>
         </div>
 
