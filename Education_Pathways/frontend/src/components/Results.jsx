@@ -29,16 +29,16 @@ class Result extends Component{
   }
   
   componentDidMount() {
-    axios.get(`https://assignment-1-starter-template.herokuapp.com/user/wishlist?username=${this.state.username}`)
-    .then(res => {
-      let len = res.data.wishlist.course.length
-      for (let i = 0; i < len; i++) {
-        if (res.data.wishlist.course[i].code === this.state.course_code) {
-          star = starred
-          this.setState({starred: true})
-        }
-      }
-    })
+    // axios.get(`https://assignment-1-starter-template.herokuapp.com/user/wishlist?username=${this.state.username}`)
+    // .then(res => {
+    //   let len = res.data.wishlist.course.length
+    //   for (let i = 0; i < len; i++) {
+    //     if (res.data.wishlist.course[i].code === this.state.course_code) {
+    //       star = starred
+    //       this.setState({starred: true})
+    //     }
+    //   }
+    // })
   }
 
 
@@ -51,13 +51,11 @@ class Result extends Component{
         <a href={`courseDetails/${this.state.course_code}`} onClick={this.redirectCourse} className={"search-result-item"} style={{textDecoration: "none"}}>
         <Row className={"result-display"}>
             <Col>
-                <h5>{this.state.course_code}</h5>  
+                <h6>{this.state.course_code}</h6>  
             </Col>
             <Col>
-                <h5>{this.state.course_name}</h5>
+                <p>{this.state.course_name}</p>
             </Col>
-            <Col>{this.state.division}</Col>
-            <Col>{this.state.faculty}</Col>
             {/* <Col><img src={star} alt=""/></Col> */}
         </Row>
         </a>

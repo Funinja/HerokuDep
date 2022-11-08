@@ -43,6 +43,11 @@ class SearchResultDisplay extends Component{
     this.handleChangeLevel = this.handleChangeLevel.bind(this);
   }
 
+  handleCourseRoute(event, course_code){
+    console.log(course_code)
+    this.props.history.push(`/course/details/${this.props.course_code}`, {course_code: course_code})
+  }
+
   handleChange(event) {
     event.preventDefault();
     this.setState({input: event.target.value});
@@ -105,6 +110,10 @@ class SearchResultDisplay extends Component{
     }
   }
 
+  clickEvent = (event) =>{
+    event.stopPropagation();
+    this.setState({results: [], error : 0})
+  }
 
   getData = (input, filterDepartment, filterLevel) => {
     axios.get(`http://127.0.0.1:5000/searchc`,{
@@ -134,19 +143,21 @@ class SearchResultDisplay extends Component{
             courses.push(course_prob[i])
           }
           
-          console.log(courses)
+          console.log("Here")
+          console.log(courses.length)
 
-          if (courses.length > 0) {
+          if (courses.length >= 0) {
             let len = courses.length
             let result_temp = []
             
-            result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
                 if(input === courses[i].slice(0, input.length)){
-                  result_temp.push(<Result course_code={courses[i]} course_name={course_names[i]}></Result>)
+                  result_temp.push(
+                    <Result course_code={courses[i]} course_name={course_names[i]}></Result>
+                  )
                 }
             }
-            if(result_temp.length === 1){
+            if(result_temp.length === 0){
               this.setState({result : [], error : 1})
             }else{
               this.setState({results: result_temp, error : 0})
@@ -174,7 +185,7 @@ class SearchResultDisplay extends Component{
   
   render(){
     return (
-      <div className="SearchQuery">
+      <div className="SearchQuery" onClick={this.clickEvent}>
         <div style={{ marginTop: "10%" }}>
             <h1> Education Pathways</h1>
             <br></br>
@@ -190,35 +201,36 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <form onSubmit={this.handleSubmit} className={"search"}>
                 <input placeholder={"Search for course code, course name, keyword ..."} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
                 <input type="submit" value="Search" className={"submit-button"}/>
+                <ul id="course_list" className="dropdown_search_opt">
+                  <div className={"search-result-display"} >
+                  {this.state.error === 1 ? 
+                        <h1>No such courses exist</h1>
+                        :
+                        this.state.results}
+                  </div>
+                </ul>
                 <div className="dropdown_dep">
-                  <h4>Department</h4>
                   <Select 
                     options={depOptions}
                     onChange={this.handleDepChange}
                     isMulti
+                    placeholder="Department"
                     
                   />
                   
                 </div>
                 <div className="dropdown_level">
-                  <h4>Level</h4>
                   <Select 
                     options={filtOptions}
                     onChange={this.handleChangeLevel}
                     isMulti
+                    placeholder="Level"
                     
                   />
                   
                 </div>
 
             </form>
-        </div>
-
-        <div className={"search-result-display"} >
-            {this.state.error === 1 ? 
-              <h1>No such courses exist</h1>
-              :
-              this.state.results}
         </div>
 
        

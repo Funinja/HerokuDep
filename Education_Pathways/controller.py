@@ -54,7 +54,8 @@ class SearchCourse(Resource):
 
             matches = []
             for match in list_of_best_matches:
-                matches.append(match[0])
+                if(match[0][:len(input)] == input ):
+                    matches.append(match[0])
             list_of_best_matches = matches
 
             course_names = []
