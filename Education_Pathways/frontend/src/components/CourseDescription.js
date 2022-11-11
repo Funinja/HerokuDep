@@ -10,12 +10,13 @@ import starred from './img/starred.png'
 import axios from "axios"
 import qs from "qs";
 
+import ReviewsComp from "./ReviewsComp/ReviewsComp";
+
 let star = empty_star;
 
 class CourseDescriptionPage extends Component {
-
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
       course_code: "",
@@ -30,14 +31,12 @@ class CourseDescriptionPage extends Component {
       exclusions: "",
       starred: false,
       graphics: [],
-      username: localStorage.getItem('username')
-    }
+      username: localStorage.getItem("username"),
+    };
   }
 
-
-
   componentDidMount() {
-    console.log("pass in course code: ", this.props.match.params.code)
+    console.log("pass in course code: ", this.props.match.params.code);
 
     axios.get(`http://127.0.0.1:5000/course/descriptions`, {
       params:{
@@ -111,33 +110,34 @@ class CourseDescriptionPage extends Component {
         let syllabus_link = "http://courses.skule.ca/course/" + this.props.code
         this.setState({syllabus : syllabus_link})
 
-        let temp_graph = []
+        let temp_graph = [];
         //temp_graph.push(<ShowGraph graph_src={this.state.graph}></ShowGraph>)
-        this.setState({graphics: temp_graph})
+        this.setState({ graphics: temp_graph });
+      });
 
-
-    })
-
-
-    console.log("new state: ", this.state)
+    console.log("new state: ", this.state);
   }
 
-
   openLink = () => {
-    const newWindow = window.open(this.state.syllabus, '_blacnk', 'noopener,noreferrer');
+    const newWindow = window.open(
+      this.state.syllabus,
+      "_blacnk",
+      "noopener,noreferrer"
+    );
     if (newWindow) {
       newWindow.opener = null;
     }
-  }
+  };
 
-	render() {
-		return(
-
+  render() {
+    return (
       <div className="page-content">
         <Container className="course-template">
           <Row float="center" className="course-title">
             <Col xs={8}>
-              <h1>{this.state.course_code} : {this.state.course_name}</h1>
+              <h1>
+                {this.state.course_code} : {this.state.course_name}
+              </h1>
             </Col>
             {/* <Col xs={4}>
               <img src={star} onClick={this.check_star} alt="" />
@@ -154,7 +154,9 @@ class CourseDescriptionPage extends Component {
             </Col>
             <Col className="col-item">
               <h3>Past Tests and Syllabi</h3>
-              <button className={"syllabus-link"} onClick={this.openLink}>View</button>
+              <button className={"syllabus-link"} onClick={this.openLink}>
+                View
+              </button>
             </Col>
           </Row>
           <Row className="col-item course-description">
@@ -180,11 +182,16 @@ class CourseDescriptionPage extends Component {
               </Col>
             </Row>
           </Row>
+          <Row className="col-item" style={{ padding: "20px" }}>
+            <h3 style={{ marginBottom: "30px", marginLeft: 0 }}>
+              Course Reviews
+            </h3>
+            <ReviewsComp />
+          </Row>
         </Container>
       </div>
-
-		)
-	}
+    );
+  }
 }
 
-export default CourseDescriptionPage
+export default CourseDescriptionPage;

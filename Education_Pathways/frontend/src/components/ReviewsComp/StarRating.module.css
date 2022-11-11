@@ -1,0 +1,11 @@
+.star-rating {
+    margin-bottom: 24px;
+}
+
+.star-input {
+    display: none;
+}
+
+.star {
+    cursor: pointer;
+}
