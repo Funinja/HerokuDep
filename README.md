@@ -140,3 +140,12 @@ $ git push heroku main
 $ heroku open
 ```
 or go to your [Heroku account](https://dashboard.heroku.com/apps) and check your the url of your deployed app. (`https://myapp-unique-name.herokuapp.com/`)
+
+## Dennis Lam: Pros and Cons of TDD
+
+Tests I did:
+* Checked to make sure that there is sufficient division and department data on courses when accessing the database
+* Checked whether the autocomplete search results were given from our course names endpoint after the user begins typing in the searchbar
+* Checked whether the course description endpoint gave sufficient descriptions of courses
+
+Test Driven Development (TDD) is a methodology centered around the idea where you write and run test cases before developing code. The favorable quality of this methodology comes from its repeated use in developing tests before development. Writing test cases causes one to be forced to conform to a specific architecture, by providing clarity using test cases, to make functions and modules operate correctly. Specifically, test cases provide clearness to its developers by showing how the input and output of their code should function. This transparency in functional operations allows for code to be more easily maintainable, documentable, and easier for collaboration. However, since the test cases and test suite must be continuously updated and maintained, the quality and the repeated task of making test cases can become detrimental to the project. In terms of quality test cases, determining good test cases can become difficult for a project since a lot of time could be focused on what problems the developers are expecting instead of unforeseen problems of the project. Furthermore, the process of updating the test cases of your project as it develops can create a bottleneck for development from waiting for tests to be created. Additionally, refactoring any early work would require refactoring early test cases as well, increasing the amount of time it takes to work on a project with TDD. Overall, TDD provides consistency and clarity for developers to operate, but can be a hindrance if the team has a strict deadline and poor-quality test cases.
