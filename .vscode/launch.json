@@ -30,6 +30,7 @@
             "type": "python",
             "request": "launch",
             "module": "flask",
+            "cwd": "${workspaceFolder}/Education_Pathways/",
             "env": {
                 "FLASK_APP": "./Education_Pathways/index.py",
                 "FLASK_DEBUG": "1"
