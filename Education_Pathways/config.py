@@ -16,13 +16,13 @@ course_to_div = {}
 def init_app(app_):
     global app
     app = app_
-    d_file = open('./Education_Pathways/departments.csv')
+    d_file = open('departments.csv')
     csvreader = csv.reader(d_file)
     for row in csvreader:
         course_to_dep[row[0]] = row[1]
     d_file.close()
 
-    d_file = open('./Education_Pathways/divisions.csv')
+    d_file = open('divisions.csv')
     csvreader = csv.reader(d_file)
     for row in csvreader:
         course_to_div[row[0]] = row[1]

@@ -26,10 +26,11 @@
             "type": "node"
         },
         {
-            "name": "Run Flask",
+            "name": "Run Flask & Watch Frontend",
             "type": "python",
             "request": "launch",
             "module": "flask",
+            "preLaunchTask": "npm: watch - Education_Pathways/frontend",
             "cwd": "${workspaceFolder}/Education_Pathways/",
             "env": {
                 "FLASK_APP": "./Education_Pathways/index.py",
