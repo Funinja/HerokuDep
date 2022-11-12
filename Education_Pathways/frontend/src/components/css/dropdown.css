@@ -1,11 +1,18 @@
 .dropdown_dep {
-    width: 80%;
-    padding-left: 55%;
+    width: 50%;
+    padding-left: 27%;
     padding-top: 1%;
 }
 
 .dropdown_level {
-    width: 80%;
-    padding-left: 70%;
+    width: 47%;
+    padding-left: 30%;
     padding-top: 1%;
+}
+
+.dropdown_search_opt {
+    width: 70%;
+    padding-left: 26%;
+    padding-top: 0%;
+    margin:0%;
 }

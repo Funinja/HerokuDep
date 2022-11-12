@@ -4,7 +4,7 @@ from flask import jsonify, request
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
 import bson.json_util as json_util
-from config import app, list_of_course_strings, client, course_to_name, course_to_dep
+from config import app, list_of_course_strings, client, course_to_name, course_to_dep, course_to_div
 from rapidfuzz import process, fuzz
 from model import searchschema
 
@@ -54,7 +54,8 @@ class SearchCourse(Resource):
 
             matches = []
             for match in list_of_best_matches:
-                matches.append(match[0])
+                if(match[0][:len(input)] == input ):
+                    matches.append(match[0])
             list_of_best_matches = matches
 
             course_names = []
@@ -119,6 +120,9 @@ class SearchList(Resource):
             for i in range(len(course_description)):
                 if course_description[i]["Course Code"] in course_to_dep:
                     course_description[i]["Department"] = course_to_dep[course_description[i]["Course Code"]]
+
+                if course_description[i]["Course Code"] in course_to_div:
+                    course_description[i]["Division"] = course_to_div[course_description[i]["Course Code"]]
 
             cd = json_util.dumps(course_description)
             # print(cd)
