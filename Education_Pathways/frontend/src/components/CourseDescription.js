@@ -14,7 +14,7 @@ let star = empty_star;
 
 class CourseDescriptionPage extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -22,7 +22,7 @@ class CourseDescriptionPage extends Component {
       course_name: "",
       division: "",
       department: "",
-      graph : "",
+      graph: "",
       course_description: "",
       syllabus: "",
       prerequisites: "",
@@ -30,7 +30,8 @@ class CourseDescriptionPage extends Component {
       exclusions: "",
       starred: false,
       graphics: [],
-      username: localStorage.getItem('username')
+      username: localStorage.getItem('username'),
+      in_list: false,
     }
   }
 
@@ -40,7 +41,7 @@ class CourseDescriptionPage extends Component {
     console.log("pass in course code: ", this.props.match.params.code)
 
     axios.get(`http://127.0.0.1:5000/course/descriptions`, {
-      params:{
+      params: {
         courses: [this.props.match.params.code],
       },
       paramsSerializer: params => {
@@ -53,70 +54,75 @@ class CourseDescriptionPage extends Component {
         let json = JSON.parse(json_dump)
         let course_info = json[0]
 
-        this.setState({course_code: course_info["Course Code"]})
-        this.setState({course_name: course_info["Course Name"]})
-        this.setState({division: course_info["Division"]})
-        this.setState({department: course_info["Department"]})
+        this.setState({ course_code: course_info["Course Code"] })
+        this.setState({ course_name: course_info["Course Name"] })
+        this.setState({ division: course_info["Division"] })
+        this.setState({ department: course_info["Department"] })
 
-        this.setState({course_description : course_info["Details"]})
+        this.setState({ course_description: course_info["Details"] })
 
         let pre_str = course_info["Prerequisites"].slice(1, -1)
         let prereq = pre_str.split(", ")
 
         let total_prereq = ""
-        for (let i = 0; i < prereq.length; i++){
-          prereq[i] = prereq[i].slice(1,-1);
+        for (let i = 0; i < prereq.length; i++) {
+          prereq[i] = prereq[i].slice(1, -1);
           total_prereq += prereq[i]
-          if (i < prereq.length - 1){
+          if (i < prereq.length - 1) {
             total_prereq += ", "
           }
         }
 
-        this.setState({prerequisites : total_prereq})
+        this.setState({ prerequisites: total_prereq })
 
         let co_str = course_info["Corequisites"].slice(1, -1)
         let co_req = co_str.split(", ")
 
         let total_coreq = ""
         console.log("here", co_req)
-        for (let i = 0; i < co_req.length; i++){
-          co_req[i] = co_req[i].slice(1,-1);
+        for (let i = 0; i < co_req.length; i++) {
+          co_req[i] = co_req[i].slice(1, -1);
           total_coreq += co_req[i]
-          if (i < co_req.length - 1){
+          if (i < co_req.length - 1) {
             total_coreq += ", "
           }
         }
 
         console.log(total_coreq)
 
-        this.setState({corequisites : total_coreq})
+        this.setState({ corequisites: total_coreq })
 
         let ex_str = course_info["Exclusion"].slice(1, -1)
         let ex_req = ex_str.split(", ")
 
         let total_exreq = "";
-        for(let i = 0; i < ex_req.length; i++){
+        for (let i = 0; i < ex_req.length; i++) {
           ex_req[i] = ex_req[i].slice(1, -1)
           total_exreq += ex_req[i]
-          if (i < ex_req.length - 1){
+          if (i < ex_req.length - 1) {
             total_exreq += ", "
           }
         }
 
         console.log("here", total_exreq)
-        
 
-        this.setState({exclusions : total_exreq})
-        
+
+        this.setState({ exclusions: total_exreq })
+
         let syllabus_link = "http://courses.skule.ca/course/" + this.props.code
-        this.setState({syllabus : syllabus_link})
+        this.setState({ syllabus: syllabus_link })
 
         let temp_graph = []
         //temp_graph.push(<ShowGraph graph_src={this.state.graph}></ShowGraph>)
-        this.setState({graphics: temp_graph})
+        this.setState({ graphics: temp_graph })
 
+        let in_list = false;
+        if (sessionStorage.getItem(this.state.course_code) != null) {
+          in_list = true;
+        }
+        this.setState({ in_list: in_list })
 
-    })
+      })
 
 
     console.log("new state: ", this.state)
@@ -130,8 +136,18 @@ class CourseDescriptionPage extends Component {
     }
   }
 
-	render() {
-		return(
+  addToList = () => {
+    sessionStorage.setItem(this.state.course_code, "");
+    this.setState({ in_list: true })
+  }
+
+  removeFromList = () => {
+    sessionStorage.removeItem(this.state.course_code);
+    this.setState({ in_list: false })
+  }
+
+  render() {
+    return (
 
       <div className="page-content">
         <Container className="course-template">
@@ -142,6 +158,15 @@ class CourseDescriptionPage extends Component {
             {/* <Col xs={4}>
               <img src={star} onClick={this.check_star} alt="" />
             </Col> */}
+            <Col>
+              {
+                this.state.in_list ? (
+                  <button className={"syllabus-link"} onClick={this.removeFromList}> Remove from List</button>
+                ) : (
+                  <button className={"syllabus-link"} onClick={this.addToList}> Add to List</button>
+                )
+              }
+            </Col>
           </Row>
           <Row>
             <Col className="col-item">
@@ -182,9 +207,8 @@ class CourseDescriptionPage extends Component {
           </Row>
         </Container>
       </div>
-
-		)
-	}
+    )
+  }
 }
 
 export default CourseDescriptionPage
