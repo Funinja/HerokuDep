@@ -141,7 +141,7 @@ class CourseList(Resource):
     def get(self):
         try:
             courselistgetschema.validate(request.args)
-            uuid = request.args.get('uuid')
+            uuid = request.args.get('list_uuid')
             course_list_document = list_collection.find_one({ 'list_uuid': uuid })
             resp = jsonify({'course_list': course_list_document['course_list']})
             resp.status_code = 200
