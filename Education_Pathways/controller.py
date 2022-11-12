@@ -4,10 +4,11 @@ from flask import jsonify, request
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
 import bson.json_util as json_util
-from config import app, list_of_course_strings, client, course_to_name, course_to_dep, course_to_div
+from config import app, list_of_course_strings, client, course_to_name, course_to_dep, course_to_div, list_collection
 from rapidfuzz import process, fuzz
-from model import searchschema
-
+from model import searchschema, courselistgetschema, courselistpostschema
+from uuid import uuid1
+from marshmallow import ValidationError
 
 # -------------------- Course related --------------------
 class SearchCourse(Resource):
@@ -134,6 +135,41 @@ class SearchList(Resource):
             print(e)
             resp = jsonify({'error': 'something went wrong'})
             resp.status_code = 400
+            return resp
+
+class CourseList(Resource):
+    def get(self):
+        try:
+            courselistgetschema.validate(request.args)
+            uuid = request.args.get('uuid')
+            course_list_document = list_collection.find_one({ 'list_uuid': uuid })
+            resp = jsonify({'course_list': course_list_document['course_list']})
+            resp.status_code = 200
+            return resp
+        except ValidationError as _:
+            resp = jsonify({'message': 'query arguments are invalid'})
+            resp.status_code = 400
+            return resp
+        except Exception as e:
+            resp = jsonify({'error': f'something went wrong: {e}'})
+            resp.status_code = 500
+            return resp
+
+    def post(self):
+        try:
+            courselistpostschema.validate(request.json)
+            list_uuid = str(uuid1())
+            list_collection.insert_one({'list_uuid': list_uuid, 'course_list': request.json['courses']})
+            resp = jsonify({'list_uuid': list_uuid})
+            resp.status_code = 200
+            return resp
+        except ValidationError as _:
+            resp = jsonify({'message': 'query body is invalid'})
+            resp.status_code = 400
+            return resp
+        except Exception as e:
+            resp = jsonify({'error': f'something else went wrong: {e}'})
+            resp.status_code = 500
             return resp
 
 # class ShowCourse(Resource):
