@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 // import starred from './img/starred.png'
 import axios from "axios"
 import qs from "qs";
+import Syllabi from './Syllabi';
 
 import ReviewsComp from "./ReviewsComp/ReviewsComp";
 import ReviewsContext from "../context/ReviewsContext";
@@ -21,7 +22,7 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: "",
+      course_code: this.props.match.params.code,
       course_name: "",
       division: "",
       department: "",
@@ -205,7 +206,8 @@ class CourseDescriptionPage extends Component {
             </Col>
             <Col className="col-item">
               <h3>Course Syllabus</h3>
-              { this.state.syllabus ?
+              <Syllabi course_code={this.state.course_code}/>
+              {/* { this.state.syllabus ?
                 <button className={"syllabus-link"} onClick={this.openLink}>View</button> :
                 <div className='syllabus-request'>
                   <button className={"syllabus-link"} onClick={this.openLink}>Request</button>
@@ -213,7 +215,7 @@ class CourseDescriptionPage extends Component {
                     {this.state.requestCount}
                   </span>
                 </div>
-              }
+              } */}
             </Col>
           </Row>
           <Row className="col-item course-description">
