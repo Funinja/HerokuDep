@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Watch Frontend",
+            "options": {
+                "cwd": "${workspaceFolder}/Education_Pathways/frontend"
+            },
+            "command": "npm run watch",
+            "type": "shell",
+            "isBackground": true
+        },
+        {
+            "type": "npm",
+            "script": "watch",
+            "path": "Education_Pathways/frontend",
+            "group": "build",
+            "label": "npm: watch - Education_Pathways/frontend",
+            "detail": "npm-watch",
+            "isBackground": true
+        }
+    ]
+}
