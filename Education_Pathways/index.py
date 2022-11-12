@@ -30,6 +30,8 @@ api.add_resource(controller.SearchList, '/course/descriptions')
 # api.add_resource(controller.UserWishlistAdd, '/user/wishlist/addCourse')
 # api.add_resource(controller.UserWishlistRemove, '/user/wishlist/removeCourse')
 # api.add_resource(controller.UserWishlistMinorCheck, '/user/wishlist/minorCheck')
+api.add_resource(controller.AddReview, '/course/addreview')
+api.add_resource(controller.ReviewsList, '/course/reviews')
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')

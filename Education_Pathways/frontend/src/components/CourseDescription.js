@@ -31,6 +31,7 @@ class CourseDescriptionPage extends Component {
       exclusions: "",
       starred: false,
       graphics: [],
+      reviews: [],
       username: localStorage.getItem("username"),
     };
   }
@@ -115,6 +116,19 @@ class CourseDescriptionPage extends Component {
         this.setState({ graphics: temp_graph });
       });
 
+    axios.get(`http://127.0.0.1:5000/course/reviews`, {
+      params:{
+        courseCode: this.props.match.params.code,
+      },
+      paramsSerializer: params => {
+        return qs.stringify(params)
+      }
+    })
+      .then(res => {
+        let temp_reviews = JSON.parse(res.data["reviews"])
+        this.setState({reviews: temp_reviews})
+      });
+
     console.log("new state: ", this.state);
   }
 
@@ -186,7 +200,7 @@ class CourseDescriptionPage extends Component {
             <h3 style={{ marginBottom: "30px", marginLeft: 0 }}>
               Course Reviews
             </h3>
-            <ReviewsComp />
+            <ReviewsComp course_code={this.state.course_code} reviews={this.state.reviews}/>
           </Row>
         </Container>
       </div>

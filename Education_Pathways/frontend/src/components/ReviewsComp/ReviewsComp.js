@@ -24,11 +24,11 @@ const SAMPLE_DATA = [
   },
 ];
 
-const ReviewsComp = () => {
+const ReviewsComp = (props) => {
   return (
     <div className={styles["reviews-comp"]}>
-      <ReviewsForm />
-      <ReviewsList reviewsData={SAMPLE_DATA} />
+      <ReviewsForm course_code={props.course_code} />
+      <ReviewsList reviewsData={props.reviews} />
     </div>
   );
 };

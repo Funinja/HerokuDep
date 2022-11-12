@@ -9,10 +9,10 @@ const ReviewsList = ({ reviewsData }) => {
         return (
           <li>
             <ReviewCard
-              firstName={review.first}
-              lastName={review.last}
-              review={review.review}
-              rating={review.rating}
+              firstName={review['first']}
+              lastName={review['last']}
+              review={review['review']}
+              rating={review['rating']}
             />
           </li>
         );
