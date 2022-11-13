@@ -62,7 +62,7 @@ export class Syllabi extends Component {
     }else if (this.state.requested){
       return (
         <div className='syllabus-request'>
-          <button className={"syllabus-link"}>Already Requested</button>
+          <button className={"syllabus-link"} disabled={true}>Requested</button>
           <span className={"request-counter"} title="Number of requests made for this course">
             {this.state.request_count}
           </span>

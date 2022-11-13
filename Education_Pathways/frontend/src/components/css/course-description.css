@@ -102,6 +102,10 @@ p {
   justify-content: center;
 }
 
+.syllabus-request :disabled{
+  background-color: grey; 
+}
+
 .syllabus-request span {
   color: white;
   background-color: grey;
