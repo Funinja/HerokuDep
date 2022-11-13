@@ -306,4 +306,4 @@ def test_reviews_addition():
     data = response.get_data(as_text=True)
     json_data = json.loads(data)
 
-    assert '{"first": "Loren", "last": "Ipsum", "review": "Good Course", "rating": "5"}' in json_data 
+    assert '{\"first\": \"Loren\", \"last\": \"Ipsum\", \"review\": \"Good Course\", \"rating\": \"5\"}' in json_data 
