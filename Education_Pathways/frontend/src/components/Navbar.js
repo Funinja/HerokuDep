@@ -12,6 +12,7 @@ import SearchResultDisplay from './ResultDisplay'
 import SearchList from './SearchDisplay'
 import MyListPage from './MyListPage'
 import ListPage from './ListPage'
+import AdminPanel from './AdminPanel';
 
 // function CourseDescription(props) {
 //   let query = useQuery();
@@ -118,6 +119,9 @@ export default class NavbarComp extends Component {
             <Route exact
               path="/list/:uuid"
               render={props => (<ListPage {...props} />)}>
+            </Route>
+            <Route path="/adminPanel">
+              <AdminPanel />
             </Route>
             <Route path="/">
               <SearchResultDisplay />
