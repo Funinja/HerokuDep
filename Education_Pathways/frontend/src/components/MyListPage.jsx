@@ -16,6 +16,7 @@ class MyListPage extends Component {
 
     this.state = {
       courses: [],
+      course_descriptions: [],
       list_link: "",
     }
   }
@@ -36,7 +37,7 @@ class MyListPage extends Component {
       }
     }).then(res => {
       let json = JSON.parse(res.data["course_descriptions"])
-      this.setState({ courses: json })
+      this.setState({ course_descriptions: json })
     })
 
   }
@@ -63,7 +64,7 @@ class MyListPage extends Component {
             <Col>
               <Nav>
                 {
-                  this.state.courses.map((course) =>
+                  this.state.course_descriptions.map((course) =>
                     <Nav.Link key={course["Course Code"]} as={Link} to={`/courseDetails/${course["Course Code"]}`}>
                       <Card style={{ width: '18rem' }}>
                         <Card.Body>
