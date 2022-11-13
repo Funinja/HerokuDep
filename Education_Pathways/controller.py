@@ -142,15 +142,15 @@ class CourseList(Resource):
     def get(self):
         try:
             validation_errors = courselistgetschema.validate(request.args)
-            for err in validation_errors:
-                raise ValidationError(err)
+            if len(validation_errors) != 0:
+                raise ValidationError(validation_errors)
             uuid = request.args.get('list_uuid')
             course_list_document = list_collection.find_one({ 'list_uuid': uuid })
             resp = jsonify({'course_list': course_list_document['course_list']})
             resp.status_code = 200
             return resp
-        except ValidationError as _:
-            resp = jsonify({'message': 'query arguments are invalid'})
+        except ValidationError as e:
+            resp = jsonify({'message': f'query body is invalid: {e}'})
             resp.status_code = 400
             return resp
         except Exception as e:
@@ -161,8 +161,8 @@ class CourseList(Resource):
     def post(self):
         try:
             validation_errors = courselistpostschema.validate(request.json)
-            for err in validation_errors:
-                raise ValidationError(err)
+            if len(validation_errors) != 0:
+                raise ValidationError(validation_errors)
             list_uuid = str(uuid1())
             list_collection.insert_one({'list_uuid': list_uuid, 'course_list': request.json['courses']})
             resp = jsonify({'list_uuid': list_uuid})
@@ -172,8 +172,8 @@ class CourseList(Resource):
             resp = jsonify({'message': f'{e}'})
             resp.status_code = 400
             return resp
-        except ValidationError as _:
-            resp = jsonify({'message': 'query body is invalid'})
+        except ValidationError as e:
+            resp = jsonify({'message': f'query body is invalid: {e}'})
             resp.status_code = 400
             return resp
         except Exception as e:
