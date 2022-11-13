@@ -8,7 +8,7 @@ class CourseListPostSchema(Schema):
     courses = fields.List(fields.String(), required=True)
 
 class CourseListGetSchema(Schema):
-    uuid = fields.String(required=True)
+    list_uuid = fields.String(required=True)
 
 searchschema = SearchQuerySchema()
 courselistpostschema = CourseListPostSchema()

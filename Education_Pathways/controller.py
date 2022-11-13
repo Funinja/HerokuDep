@@ -9,6 +9,7 @@ from rapidfuzz import process, fuzz
 from model import searchschema, courselistgetschema, courselistpostschema
 from uuid import uuid1
 from marshmallow import ValidationError
+from werkzeug.exceptions import BadRequest
 
 # -------------------- Course related --------------------
 class SearchCourse(Resource):
@@ -140,7 +141,9 @@ class SearchList(Resource):
 class CourseList(Resource):
     def get(self):
         try:
-            courselistgetschema.validate(request.args)
+            validation_errors = courselistgetschema.validate(request.args)
+            for err in validation_errors:
+                raise ValidationError(err)
             uuid = request.args.get('list_uuid')
             course_list_document = list_collection.find_one({ 'list_uuid': uuid })
             resp = jsonify({'course_list': course_list_document['course_list']})
@@ -157,11 +160,17 @@ class CourseList(Resource):
 
     def post(self):
         try:
-            courselistpostschema.validate(request.json)
+            validation_errors = courselistpostschema.validate(request.json)
+            for err in validation_errors:
+                raise ValidationError(err)
             list_uuid = str(uuid1())
             list_collection.insert_one({'list_uuid': list_uuid, 'course_list': request.json['courses']})
             resp = jsonify({'list_uuid': list_uuid})
             resp.status_code = 200
+            return resp
+        except BadRequest as e:
+            resp = jsonify({'message': f'{e}'})
+            resp.status_code = 400
             return resp
         except ValidationError as _:
             resp = jsonify({'message': 'query body is invalid'})
