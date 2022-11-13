@@ -24,6 +24,7 @@ api = Api(app)
 api.add_resource(controller.SearchCourse, '/searchc')
 api.add_resource(controller.SearchList, '/course/descriptions')
 api.add_resource(controller.CourseList, '/api/list')
+api.add_resource(controller.Syllabus, '/course/syllabus')
 # api.add_resource(controller.ShowCourse, '/course/details')
 # api.add_resource(controller.ShowCourseGraph, '/course/graph')
 
