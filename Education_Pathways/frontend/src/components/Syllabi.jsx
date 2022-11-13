@@ -31,8 +31,8 @@ export class Syllabi extends Component {
       }
     })
   }
-  openLink() {
-    const newWindow = window.open(this.state.syllabus_link, '_blacnk', 'noopener,noreferrer');
+  openLink = () => {
+    const newWindow = window.open(this.state.syllabus_link, '_blank', 'noopener,noreferrer');
     if (newWindow) {
       newWindow.opener = null;
     }
