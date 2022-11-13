@@ -12,6 +12,7 @@ list_of_course_strings = None
 course_to_name = {}
 course_to_dep = {}
 course_to_div = {}
+list_collection = None
 
 def init_app(app_):
     global app
@@ -33,10 +34,12 @@ def init_app(app_):
 def init_db(app):
     global client
     global list_of_course_strings
+    global list_collection
     pw = os.environ.get('MONGO_URI')
     client = MongoClient(f'mongodb+srv://flask_app_user:{pw}@cluster0.dmqmrxd.mongodb.net/?retryWrites=true&w=majority')
     db = client.courses
     coll = db.get_collection('engineering')
+    list_collection = db.get_collection('lists')
     list_of_courses = list(coll.find({}))
     for i in list_of_courses:
         course_to_name[i['Course Code']] = i['Course Name']
