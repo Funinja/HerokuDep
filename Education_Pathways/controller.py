@@ -397,3 +397,59 @@ class CourseList(Resource):
 #             resp = jsonify({'error': 'something went wrong'})
 #             resp.status_code = 400
 #             return resp
+
+class AddReview(Resource):
+    def get(self):
+        courseCode = request.args.get('courseCode')
+        firstName = request.args.get('firstName')
+        lastName = request.args.get('lastName')
+        review = request.args.get('review')
+        stars = request.args.get('stars')
+        try:
+            db = client.reviews
+            coll = db.get_collection('engineering')
+
+            course_query = {"Course Code": courseCode}
+
+            reviews = list(coll.find(course_query))[0]["Reviews"]
+
+            review = {"first": firstName, "last": lastName, "review": review, "rating": stars}
+
+            reviews.append(review)
+
+            new_review = {"$set": {"Reviews": reviews}}
+
+            coll.update_one(course_query, new_review)
+
+            resp = jsonify()
+            resp.status_code = 200
+
+            return resp
+        except Exception as e:
+            print(e)
+            resp = jsonify({'error': 'something went wrong'})
+            resp.status_code = 400
+            return resp
+
+class ReviewsList(Resource):
+    def get(self):
+        courseCode = request.args.get('courseCode')
+        try:
+            db = client.reviews
+            coll = db.get_collection('engineering')
+
+            course_query = {"Course Code": courseCode}
+
+            reviews = list(coll.find(course_query))[0]['Reviews']
+
+            cd = json_util.dumps(reviews)
+            # print(cd)
+            resp = jsonify(reviews=cd)
+            resp.status_code = 200
+
+            return resp
+        except Exception as e:
+            print(e)
+            resp = jsonify({'error': 'something went wrong'})
+            resp.status_code = 400
+            return resp

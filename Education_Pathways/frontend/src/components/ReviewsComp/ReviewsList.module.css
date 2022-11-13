@@ -1,0 +1,8 @@
+.reviews-list {
+    list-style: none;
+    padding: 0;
+}
+
+.reviews-list li:not(:last-child) {
+    margin-bottom: 20px
+}
