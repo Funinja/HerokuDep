@@ -69,6 +69,54 @@ def test_user_wishlist_minorCheck_endpoint():
 
     assert response.status_code == 200\
 
+# Joseph
+# Test addition of course list to database and fetching of course list from database 
+def test_create_and_fetch_course_list_success():
+    tester = app.test_client()
+
+    courses = ['ECE454H1', 'ECE444H1', 'ECE467H1', 'AER525H1']
+    response = tester.post('/api/list', json={
+        'courses': courses
+    })
+    assert response.status_code == 200
+
+    data = response.get_data(as_text=True)
+    json_data = json.loads(data)
+    assert 'list_uuid' in json_data 
+    assert type(json_data['list_uuid']) is str
+
+    response = tester.get(f"/api/list?list_uuid={json_data['list_uuid']}")
+    assert response.status_code == 200
+
+    data = response.get_data(as_text=True)
+    json_data = json.loads(data)
+    assert 'course_list' in json_data 
+    assert json_data['course_list'] == courses
+
+# Joseph
+# Test failure of fetching of course lists
+def test_fetch_course_list_failure():
+    tester = app.test_client()
+
+    response = tester.get('/api/list')
+    assert response.status_code == 400
+
+    response = tester.post('/api/list?uuid=random')
+    assert response.status_code == 400
+
+# Joseph
+# Test failure of creation of course lists
+def test_create_course_list_failure():
+    tester = app.test_client()
+
+    response = tester.post('/api/list')
+    assert response.status_code == 400
+
+    response = tester.post('/api/list', json={
+        'random': 'random'
+    })
+    assert response.status_code == 400
+
 # Dennis
 # Test whether there is a correct number of divisions and departments for each course
 def test_check_correct_num_divisions_departments():
