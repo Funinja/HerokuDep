@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import './css/course-description.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +11,7 @@ import axios from "axios"
 import qs from "qs";
 
 import ReviewsComp from "./ReviewsComp/ReviewsComp";
+import ReviewsContext from "../context/ReviewsContext";
 
 let star = empty_star;
 
@@ -200,7 +201,10 @@ class CourseDescriptionPage extends Component {
             <h3 style={{ marginBottom: "30px", marginLeft: 0 }}>
               Course Reviews
             </h3>
-            <ReviewsComp course_code={this.state.course_code} reviews={this.state.reviews}/>
+            
+            <ReviewsContext.Provider value={{reviews: this.state.reviews , setReviews: (newReviews) => { this.setState({reviews: newReviews}) }}}>
+              <ReviewsComp course_code={this.state.course_code} reviews={this.state.reviews}/>
+            </ReviewsContext.Provider>
           </Row>
         </Container>
       </div>

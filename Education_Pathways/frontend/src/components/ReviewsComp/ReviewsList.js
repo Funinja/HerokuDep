@@ -1,11 +1,21 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import ReviewCard from "./ReviewCard";
 import styles from "./ReviewsList.module.css";
+import ReviewsContext from "../../context/ReviewsContext";
 
 const ReviewsList = ({ reviewsData }) => {
+  // const reviews = useContext(ReviewsContext)
+  // const [data, setData] = useState(reviewsData);
+  const {reviews, setReviews} = useContext(ReviewsContext);
+
+  // useEffect(() => {
+  //   setData(reviews);
+  //   console.log('reviews changed!');
+  // }, [reviews])
+
   return (
     <ul className={styles["reviews-list"]}>
-      {reviewsData.map((review) => {
+      {reviews.reverse().map((review) => {
         return (
           <li>
             <ReviewCard

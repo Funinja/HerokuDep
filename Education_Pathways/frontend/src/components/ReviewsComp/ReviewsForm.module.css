@@ -1,3 +1,15 @@
 .reviews-form {
     margin-bottom: 30px;
 }
+
+.star-rating {
+    margin-bottom: 24px;
+}
+
+.star-input {
+    display: none;
+}
+
+.star {
+    cursor: pointer;
+}

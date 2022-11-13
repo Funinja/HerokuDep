@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ReviewCard.module.css";
+import Star from "./Star";
 
 const ReviewCard = ({ firstName, lastName, review, rating }) => {
   return (
@@ -17,7 +18,15 @@ const ReviewCard = ({ firstName, lastName, review, rating }) => {
           </p>
         </div>
         <div>
-          <p style={{ margin: 0, display: "inline" }}>{rating}</p>
+          {[...Array(5)].map((star, i) => {
+            const ratingValue = i + 1;
+            console.log(rating)
+            return (
+              <Star
+                color={ratingValue <= rating ? "#ffc107" : "#e4e5e9"}
+              />
+            );
+          })}
         </div>
       </div>
       <p style={{ margin: 0 }}>{review}</p>
