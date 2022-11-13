@@ -10,6 +10,7 @@
             "request": "launch",
             "module": "flask",
             "preLaunchTask": "npm: start - Education_Pathways/frontend",
+            "postDebugTask": "Terminate All Tasks",
             "cwd": "${workspaceFolder}/Education_Pathways/",
             "env": {
                 "FLASK_APP": "./Education_Pathways/index.py",
