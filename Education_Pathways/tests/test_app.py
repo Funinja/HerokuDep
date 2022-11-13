@@ -277,3 +277,32 @@ def test_check_course_descriptions():
 
 
     assert response.status_code == 200
+
+# Michael
+# Test add/review endpoint
+def test_add_review_endpoint():
+    tester = app.test_client()
+    response = tester.get("/course/addreview")
+
+    assert response.status_code == 400
+
+# Test add/review endpoint
+def test_course_reviews_endpoint():
+    tester = app.test_client()
+    response = tester.get("/course/reviews")
+
+    assert response.status_code == 400
+
+# Test if reviews are being saved
+def test_reviews_addition():
+    tester = app.test_client()
+
+    response = tester.get("/course/addreview?courseCode=ECE444H1&firstName=Loren&lastName=Ipsum&review=Good+Course&stars=5")
+    assert response.status_code == 200
+
+    response = tester.get("/course/reviews?courseCode=ECE444H1")
+    assert response.status_code == 200
+
+    data = response.get_data(as_text=True)
+
+    assert '{\\"first\\": \\"Loren\\", \\"last\\": \\"Ipsum\\", \\"review\\": \\"Good Course\\", \\"rating\\": \\"5\\"}' in data 
