@@ -38,21 +38,21 @@ export class Syllabi extends Component {
     }
   }
   requestSyllabus = () => {
-    axios.post(`http://127.0.0.1:5000/course/syllabus`, {
-      params:{
-        course_code: this.state.course_code,
-      },
-      paramsSerializer: params => {
-        return qs.stringify(params)
-      }
-    }).then((res) => {
-      //Redo the getting or increase the count on the front end
-      this.setState({request_count: this.state.request_count + 1, requested: true});
-      console.log(res); 
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    axios
+      .post(`http://127.0.0.1:5000/course/syllabus`, {course_code: this.state.course_code,})
+      .then((res) => {
+        let newRequestCount = JSON.parse(res.data).request_count;
+        //Redo the getting or increase the count on the front end
+        this.setState({
+          request_count: newRequestCount
+            ? newRequestCount
+            : this.state.request_count + 1,
+          requested: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   render() {
     if(this.state.syllabus_link){
