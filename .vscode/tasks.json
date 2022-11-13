@@ -18,6 +18,25 @@
             "label": "npm: watch - Education_Pathways/frontend",
             "detail": "npm-watch",
             "isBackground": true
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "path": "Education_Pathways/frontend",
+            "isBackground": true,
+            "problemMatcher":{
+                "owner": "custom",   // This is not needed but, required by the problemMatcher Object
+                "pattern": {
+                    "regexp": "^$"     // This is not needed but, required by the problemMatcher Object
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "(Compiling...)|(Starting the development server)",  // Signals the begin of the Task
+                    "endsPattern": "(Compiled )*"      // Signals that now the initialization of the task is complete
+                }
+            },
+            "label": "npm: start - Education_Pathways/frontend",
+            "detail": "react-scripts start"
         }
     ]
 }
