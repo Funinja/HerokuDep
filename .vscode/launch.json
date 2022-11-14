@@ -5,6 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Flask & Start Frontend",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "preLaunchTask": "npm: start - Education_Pathways/frontend",
+            "postDebugTask": "Terminate All Tasks",
+            "cwd": "${workspaceFolder}/Education_Pathways/",
+            "env": {
+                "FLASK_APP": "./Education_Pathways/index.py",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--no-debugger"
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
+        {
             "name": "Launch Chrome Debugger",
             "request": "launch",
             "type": "chrome",
@@ -26,7 +45,7 @@
             "type": "node"
         },
         {
-            "name": "Run Flask & Watch Frontend",
+            "name": "Run Flask & Build Production Frontend",
             "type": "python",
             "request": "launch",
             "module": "flask",
@@ -42,6 +61,6 @@
             ],
             "jinja": true,
             "justMyCode": true
-        },
+        }
     ]
 }
