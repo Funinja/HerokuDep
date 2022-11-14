@@ -19,6 +19,7 @@ export function AdminPanel () {
     - make the table
     - style the table
     - pagination? - probably not necessary
+    - make an adminPanelRow component so that each row has its own state
 
   */
   const handleChange = (event) => {
