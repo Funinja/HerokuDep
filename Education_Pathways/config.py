@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import os
 from flask_cors import CORS
 import csv
+import certifi
 
 app = None
 client = None
@@ -35,8 +36,11 @@ def init_db(app):
     global client
     global list_of_course_strings
     global list_collection
+    os.environ['MONGO_URI'] = '6qbvCJQ22O3vQvjmJlV2pJ'
     pw = os.environ.get('MONGO_URI')
-    client = MongoClient(f'mongodb+srv://flask_app_user:{pw}@cluster0.dmqmrxd.mongodb.net/?retryWrites=true&w=majority')
+    client = MongoClient(f'mongodb+srv://flask_app_user:{pw}@cluster0.dmqmrxd.mongodb.net/?retryWrites=true&w=majority',
+                        tls=True,
+                        tlsCAFile=certifi.where())
     db = client.courses
     coll = db.get_collection('engineering')
     list_collection = db.get_collection('lists')
