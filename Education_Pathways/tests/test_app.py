@@ -310,7 +310,6 @@ def test_reviews_addition():
 
 # Americo
 # Test getting a syllabus info
-# Test if reviews are being saved
 def test_getting_course_info():
     tester = app.test_client()
 
@@ -321,32 +320,46 @@ def test_getting_course_info():
 
     assert 'ECE110H1' in data 
 
+# Test increasing the number of requests for a syllabus
 def test_increase_request_count():
     tester = app.test_client()
 
-    response = tester.get("/course/syllabus?course_code=ECE110H1")
+    response = tester.get("/course/syllabus?course_code=ECE159H1")
     assert response.status_code == 200
     print(response)
-    request_count = response.json['request_count']
+    request_count = json.loads(response.json)[0]["request_count"]
 
-    response = tester.post("/course/syllabus")
+    response = tester.post("/course/syllabus",json={"course_code":"ECE159H1"})
     assert response.status_code == 200
 
-    new_request_count = response.json['request_count']
-
+    new_request_count = json.loads(response.json)["request_count"]
+    # assert json.loads(response.json)["request_count"] == ""
     assert new_request_count == request_count + 1
 
+# Test changing the sullabus link
 def test_change_syllabus_link():
     tester = app.test_client()
 
     response = tester.get("/course/syllabus?course_code=TEP281H1")
     assert response.status_code == 200
-    link = response.json['link']
-    new_link = link + 1
+    link = json.loads(response.json)[0]["link"]
+    new_link = link + "1"
 
-    response = tester.post("/course/syllabus", {link: new_link})
+    response = tester.post("/course/syllabus", json={"course_code":"TEP281H1","link": new_link})
     assert response.status_code == 200
 
-    new_request_link = response.json['link']
+    new_request_link = json.loads(response.json)["link"]
 
     assert new_link == new_request_link
+
+# Test getting all the syllabus data for the admin page
+def test_getting_all_course_info():
+    tester = app.test_client()
+
+    response = tester.get("/api/syllabusList")
+    assert response.status_code == 200
+
+    data = response.get_data(as_text=True)
+
+    assert 'ECE110H1' in data 
+    assert 'TEP281H1' in data
