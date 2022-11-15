@@ -151,11 +151,9 @@ class SearchResultDisplay extends Component{
             let result_temp = []
             
             for (let i = 0; i < len; i++) {
-                if(input === courses[i].slice(0, input.length)){
-                  result_temp.push(
-                    <Result course_code={courses[i]} course_name={course_names[i]}></Result>
-                  )
-                }
+              result_temp.push(
+                <Result course_code={courses[i]} course_name={course_names[i]}></Result>
+              )
             }
             if(result_temp.length === 0){
               this.setState({result : [], error : 1})

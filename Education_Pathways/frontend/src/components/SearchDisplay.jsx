@@ -124,9 +124,7 @@ class SearchDisplay extends Component{
           let course_names = res.data["names"]
           let courses = []
           for(let i = 0; i < course_prob.length ; i++){
-            if(input === course_prob[i].slice(0, input.length)){
-              courses.push(course_prob[i])
-            }
+            courses.push(course_prob[i])
           }
 
           this.getDescriptions(courses)
