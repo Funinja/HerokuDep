@@ -52,7 +52,6 @@ export function AdminPanel () {
     axios.get(`http://127.0.0.1:5000/api/syllabusList`, {params:{"get_all": true}})
       .then(res => {
         let courses = {...JSON.parse(res.data)}
-        console.log(courses)
         setAllCourses(courses);
         setCourseRows(populateRows(courses))
         }
