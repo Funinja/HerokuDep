@@ -1,7 +1,7 @@
 .title {
     font-size: 48px;
 }
-.col {
+.coll {
     background-color: white;
     margin: 10px;
     border-radius: 15px;
@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
 }
-.row {
+.roww {
     max-width: 100%;
     flex-wrap: nowrap !important;
 }
@@ -19,6 +19,6 @@
     min-width: 160px;
 }
 
-.col-7{
+.col-link{
     overflow: hidden;
 }
