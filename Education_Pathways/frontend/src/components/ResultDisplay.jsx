@@ -187,7 +187,7 @@ class SearchResultDisplay extends Component{
     return (
       <div className="SearchQuery" onClick={this.clickEvent}>
         <div style={{ marginTop: "10%" }}>
-            <h1> Education Pathways</h1>
+            <h1> Coursify </h1>
             <br></br>
             {/* <div className = "body_text">
       Welcome to CARTE's in-development tool for course selection at UofT. Education Pathways allows for more intelligent course searching, by matching not just the terms you search, but ones relevant to them. The more terms you search for, the more relevant your results will be! Even try searching across disciplines for the courses that best cover each.
@@ -199,7 +199,7 @@ We are looking for feedback to improve Education Pathways and make it more usefu
 
       </div> */}
             <form onSubmit={this.handleSubmit} className={"search"}>
-                <input placeholder={"Search for course code, course name, keyword ..."} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
+                <input placeholder={"Enter course code here"} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
                 <input type="submit" value="Search" className={"submit-button"}/>
                 <ul id="course_list" className="dropdown_search_opt">
                   <div className={"search-result-display"} >
@@ -209,17 +209,16 @@ We are looking for feedback to improve Education Pathways and make it more usefu
                         this.state.results}
                   </div>
                 </ul>
-                <div className="dropdown_dep">
+                <div id="dropdown_dep">
                   <Select 
                     options={depOptions}
                     onChange={this.handleDepChange}
                     isMulti
                     placeholder="Department"
                     
-                  />
-                  
+                  /> 
                 </div>
-                <div className="dropdown_level">
+                <div id="dropdown_level">
                   <Select 
                     options={filtOptions}
                     onChange={this.handleChangeLevel}
