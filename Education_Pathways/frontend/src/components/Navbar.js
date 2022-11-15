@@ -12,7 +12,7 @@ import SearchResultDisplay from './ResultDisplay'
 import SearchList from './SearchDisplay'
 import MyListPage from './MyListPage'
 import ListPage from './ListPage'
-import AdminPanel from './AdminPanel';
+import AdminPanel from './AdminPanelComp/AdminPanel';
 
 // function CourseDescription(props) {
 //   let query = useQuery();

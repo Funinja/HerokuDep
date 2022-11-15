@@ -1,0 +1,35 @@
+/* .col-item {
+    max-width: 200px;
+    min-width: 200px;
+} */
+.col {
+    background-color: white;
+    margin: 10px;
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.row {
+    max-width: 100%;
+}
+.col-course-code {
+    max-width: 140px;
+}
+.col-link-button {
+    min-width: 170px !important;
+    max-width: 170px !important;
+}
+.col-link-url {
+    max-width: 300px !important;
+}
+.panel {
+    background-color: grey;
+
+}
+
+.col-link-url {
+    overflow-wrap: break-word;
+}
+
