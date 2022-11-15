@@ -1,13 +1,8 @@
-import React, { Component, useImperativeHandle } from "react";
-import axios from 'axios'
+import React, { Component } from "react";
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import './css/Result.css'
-import unstarred from './img/star.png'
-import starred from './img/starred.png'
-
-let star;
 
 class Result extends Component{
 
@@ -21,7 +16,6 @@ class Result extends Component{
       starred: false,
       username: localStorage.getItem('username')
     };
-    star = unstarred
   }
 
   redirectCourse = () => {
