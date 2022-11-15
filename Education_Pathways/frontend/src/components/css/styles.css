@@ -1,12 +1,9 @@
-/* .App {
-    font-family: "Fredoka One", cursive;
+.App {
     text-align: center;
-    font-family: Fredoka One, cursive;
     font-style: normal;
     font-weight: normal;
     color: #1c3e6f;
-  } */
-  
+  }
   .bg-myBlue {
     background-color: #1c3e6f;
   }
@@ -37,4 +34,3 @@
     text-overflow: ellipsis;
     word-wrap: break-word;
   }
-  

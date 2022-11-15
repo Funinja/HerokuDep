@@ -1,6 +1,7 @@
 .navbar {
   width: 100vw;
   background: #1c3e6f;
+  margin-bottom: 30px;
 }
 
 .nav-item a {
@@ -18,7 +19,7 @@
   margin-left: 20px;
   max-width: 40px;
 }
-/* make the text go down */
+
 .body_text {
   font-family: 'Times New Roman', Times, serif;
   position: relative;

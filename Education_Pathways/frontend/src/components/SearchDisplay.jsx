@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+  import React, { Component } from "react";
 import axios from 'axios'
 import Result from './Results'
 import './css/Result.css'
@@ -6,7 +6,6 @@ import Label from './Label'
 import "./css/styles.css";
 import qs from "qs";
 import { withRouter } from "react-router-dom";
-
 
 class SearchDisplay extends Component{
 
@@ -75,22 +74,30 @@ class SearchDisplay extends Component{
         console.log(`it is ${res.status}`)
         let json_dump = res.data["course_descriptions"]
         let json = JSON.parse(json_dump)
-        let result_list = []
+        let result_list = [<div class='title-column'> 
+        {/* need to add font weight = bold here */}
+        <p>Course Code</p>
+        <p>Course Name</p>
+        <p>Credit Value</p>
+        <p>Department</p>
+      </div>]
 
         // console.log(json)
         for(let i = 0; i < json.length ; i++){
           // console.log(json_dump[0]["Course Code"])
           let result_temp = []
-          result_temp.push(<p>Course Code: {json[i]["Course Code"]}</p>)
-          result_temp.push(<p>Course Name: {json[i]["Course Name"]}</p>)
-          result_temp.push(<p>Credit Value: {json[i]["Credit Value"]}</p>)
-          result_temp.push(<p>Details: {json[i]["Details"]}</p>)
-          result_temp.push(<p>Prerequisites: {json[i]["Prerequisites"]}</p>)
-          result_temp.push(<p>Recommended Preparation: {json[i]["Recommended Preparation"]}</p>)
-          result_temp.push(<p>Department: {json[i]["Department"]}</p>)
+
+          result_temp.push(<div class='columns'>
+            <p>{json[i]["Course Code"]}</p>
+            <p>{json[i]["Course Name"]}</p>
+            <p>{json[i]["Credit Value"]}</p>
+            <p>{json[i]["Department"]}</p> 
+          </div>
+          )
+
           result_list.push(<a href={`../courseDetails/${json[i]["Course Code"]}`} style={{textDecoration: "none"}}>
             {result_temp}
-          </a>)
+            </a>)
         }
 
         this.setState({results: result_list})
@@ -134,7 +141,7 @@ class SearchDisplay extends Component{
           if (courses.length > 0) {
             this.setState({course_codes : courses, course_names : course_names})
           } else if (res.data.length === 0) {
-            alert("Course not found")
+            alert("No matching courses found")
           }else {
             this.setState({error : 1})
           }
@@ -162,8 +169,6 @@ class SearchDisplay extends Component{
       </div>
     );
   }
-
-
   
 }
 
