@@ -19,17 +19,17 @@ function CourseRow({course_code, number_requests, syllabus_link}) {
       });
   }
 
-  let requestElement = <Col className='col-req-num'>{number_requests ? number_requests : 0}</Col>
+  let requestElement = <Col className='col-sm'>{number_requests ? number_requests : 0}</Col>
   let linkElement, buttonElement;
   // Theres a link, and an option to change
   if(syllabusLink && !showInput){
     linkElement = (
-      <Col className="col-link-url">
+      <Col className="col-7">
         <a href={syllabusLink}>{syllabusLink}</a>
       </Col>
     );
     buttonElement = (
-      <Col className=' col-link-button'>
+      <Col className=' col-sm'>
         <Button
           as="input"
           className="btn btn-primary link-button"
@@ -44,12 +44,12 @@ function CourseRow({course_code, number_requests, syllabus_link}) {
   }else {
     // There no link, but an option to add a link
     if(showInput === false) {
-      linkElement = (<Col className=" col-link-url"/>);
+      linkElement = (<Col className=" col-7"/>);
       buttonElement = (
-        <Col className=" col-link-Button">
+        <Col className=" col-sm">
           <Button
             as="input"
-            className="btn btn-primary add_link"
+            className="btn btn-primary link-button"
             type="button"
             value="Add Link"
             onClick={() => {
@@ -60,7 +60,7 @@ function CourseRow({course_code, number_requests, syllabus_link}) {
       );
     }else {
       // Change or add a link
-      linkElement = <Col className=' col-link-input'>
+      linkElement = <Col className=' col-9'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input {...register("syllabusURL")} />
           <button type="submit">Submit</button>
@@ -70,7 +70,7 @@ function CourseRow({course_code, number_requests, syllabus_link}) {
   }
   return (
     <Row>
-      <Col className=' col-course-code'>{course_code}</Col>
+      <Col className=' col-2'>{course_code}</Col>
       {requestElement}
       {linkElement}
       {buttonElement}

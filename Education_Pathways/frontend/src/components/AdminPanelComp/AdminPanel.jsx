@@ -98,14 +98,14 @@ export function AdminPanel () {
 
   return (
       <div className='panel'>
-        <div>AdminPanel</div>
+        <div className='title'>AdminPanel</div>
         {button}
         <Container>
           <Row>
-            <Col className="col-link-url">Course Code</Col>
-            <Col className='col-req-num'>Num. Req.</Col>
-            <Col className='col-link-url'>Link</Col>
-            <Col className='col-link-button'>Option</Col>
+            <Col className="col-2">Course Code</Col>
+            <Col className='col-sm'>Num. Req.</Col>
+            <Col className='col-6'>Link</Col>
+            <Col className='col-3'>Option</Col>
           </Row>
           {courseRows}
         </Container>

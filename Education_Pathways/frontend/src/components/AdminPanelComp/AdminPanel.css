@@ -1,7 +1,6 @@
-/* .col-item {
-    max-width: 200px;
-    min-width: 200px;
-} */
+.title {
+    font-size: 48px;
+}
 .col {
     background-color: white;
     margin: 10px;
@@ -13,23 +12,13 @@
 }
 .row {
     max-width: 100%;
-}
-.col-course-code {
-    max-width: 140px;
-}
-.col-link-button {
-    min-width: 170px !important;
-    max-width: 170px !important;
-}
-.col-link-url {
-    max-width: 300px !important;
-}
-.panel {
-    background-color: grey;
-
+    flex-wrap: nowrap !important;
 }
 
-.col-link-url {
-    overflow-wrap: break-word;
+.link-button {
+    min-width: 160px;
 }
 
+.col-7{
+    overflow: hidden;
+}
