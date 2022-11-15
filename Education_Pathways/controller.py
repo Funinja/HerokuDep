@@ -51,13 +51,12 @@ class SearchCourse(Resource):
 
         try:
             print(input)
-            list_of_best_matches = process.extract(input, list_of_course_strings, limit=100, scorer=fuzz.partial_ratio)
+            list_of_best_matches = process.extract(input, list_of_course_strings, limit=100, scorer=fuzz.partial_token_set_ratio)
             # print(course_to_name)
 
             matches = []
             for match in list_of_best_matches:
-                if(match[0][:len(input)] == input ):
-                    matches.append(match[0])
+                matches.append(match[0])
             list_of_best_matches = matches
 
             course_names = []
@@ -85,7 +84,7 @@ class SearchCourse(Resource):
                 print("has departments")
 
 
-            list_of_best_matches = list_of_best_matches[:int(numResults)] # minimize results returned
+            list_of_best_matches = list_of_best_matches[:int(return_limit)] # minimize results returned
 
             print(list_of_best_matches)
             resp = jsonify(courses=list_of_best_matches, names=course_names)
