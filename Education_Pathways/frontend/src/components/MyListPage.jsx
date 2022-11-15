@@ -96,7 +96,7 @@ class MyListPage extends Component {
           <Row>
             <Col>
               {
-                this.state.list_link != "" &&
+                this.state.list_link !== "" &&
                 <Link target="_blank" to={`/list/${this.state.list_link}`}><p>{"localhost:5000/list/" + this.state.list_link}</p></Link>
               }
             </Col>

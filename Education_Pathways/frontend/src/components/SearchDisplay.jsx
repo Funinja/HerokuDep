@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios'
-import Result from './Results'
+// import Result from './Results'
 import './css/Result.css'
-import Label from './Label'
+// import Label from './Label'
 import "./css/styles.css";
 import qs from "qs";
 import { withRouter } from "react-router-dom";
