@@ -1,19 +1,19 @@
-import React, { Component, useContext } from 'react';
+import React, { Component} from 'react';
 import './css/course-description.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import requisite_label from './img/requisite-label.png'
-import empty_star from './img/star.png'
-import starred from './img/starred.png'
+// import requisite_label from './img/requisite-label.png'
+// import empty_star from './img/star.png'
+// import starred from './img/starred.png'
 import axios from "axios"
 import qs from "qs";
 
 import ReviewsComp from "./ReviewsComp/ReviewsComp";
 import ReviewsContext from "../context/ReviewsContext";
 
-let star = empty_star;
+// let star = empty_star;
 
 class CourseDescriptionPage extends Component {
 

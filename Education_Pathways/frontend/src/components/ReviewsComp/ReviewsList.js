@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useContext} from "react";
 import ReviewCard from "./ReviewCard";
 import styles from "./ReviewsList.module.css";
 import ReviewsContext from "../../context/ReviewsContext";
@@ -6,7 +6,7 @@ import ReviewsContext from "../../context/ReviewsContext";
 const ReviewsList = ({ reviewsData }) => {
   // const reviews = useContext(ReviewsContext)
   // const [data, setData] = useState(reviewsData);
-  const {reviews, setReviews} = useContext(ReviewsContext);
+  const {reviews} = useContext(ReviewsContext);
 
   // useEffect(() => {
   //   setData(reviews);
