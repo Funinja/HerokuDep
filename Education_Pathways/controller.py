@@ -180,6 +180,60 @@ class CourseList(Resource):
             resp.status_code = 500
             return resp
 
+class Syllabus(Resource):
+    def get(self):
+        course_code = request.args.get("course_code")
+        try:
+            db = client.syllabi
+            coll = db.get_collection('engineering')
+            course_syllabus_info = coll.find({"Course Code": course_code})
+            resp = jsonify(json_util.dumps(course_syllabus_info))
+            resp.status_code = 200
+            return resp
+        except Exception as e:
+            print("Exception in Syllabus Controller: ", e)
+            resp = jsonify({'Error': 'Something went wrong getting that syllabus info'})
+            resp.status_code = 400
+            return resp
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('course_code', required=True)
+        parser.add_argument('link', required=False)
+        data = parser.parse_args()
+        course_code = data['course_code']
+        try:
+            db = client.syllabi
+            coll = db.get_collection('engineering')
+            if(data['link']):
+                updatedDoc = coll.find_one_and_update(filter={"Course Code": course_code},update={'$set': {'link': data['link']}}, return_document=True)
+            else:
+                updatedDoc = coll.find_one_and_update(filter={"Course Code": course_code},update={'$inc': {'request_count': 1}}, return_document=True)
+            resp = jsonify(json_util.dumps(updatedDoc))
+            resp.status_code = 200
+            return resp
+        except Exception as e:
+            print("Exception in Syllabus Controller: ", e)
+            resp = jsonify({'Error': 'Something went wrong getting that syllabus info'})
+            resp.status_code = 400
+            return resp
+
+class SyllabusList(Resource):
+    def get(self):
+        try:
+            db = client.syllabi
+            coll = db.get_collection('engineering')
+            if(request.args.get("get_all")):
+                syllabi = list(coll.find({}))
+            else:
+                syllabi = list(coll.find({"$or":[{"request_count": {"$gt":0}},{"link": {'$exists': 'true', '$not': {'$size': 0}}}]}))
+            resp = jsonify(json_util.dumps(syllabi))
+            resp.status_code = 200
+            return resp
+        except Exception as e:
+            print("Exception in SyllabusList Controller: ", e)
+            resp = jsonify({'Error': 'Something went wrong getting that syllabus info'})
+            resp.status_code = 400
+            return resp
 # class ShowCourse(Resource):
 #     def get(self):
 #         code = request.args.get('code')

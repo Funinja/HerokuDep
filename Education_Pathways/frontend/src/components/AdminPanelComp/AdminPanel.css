@@ -1,0 +1,24 @@
+.title {
+    font-size: 48px;
+}
+.coll {
+    background-color: white;
+    margin: 10px;
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.roww {
+    max-width: 100%;
+    flex-wrap: nowrap !important;
+}
+
+.link-button {
+    min-width: 160px;
+}
+
+.col-link{
+    overflow: hidden;
+}
