@@ -326,6 +326,7 @@ def test_increase_request_count():
 
     response = tester.get("/course/syllabus?course_code=ECE110H1")
     assert response.status_code == 200
+    print(response)
     request_count = response.json['request_count']
 
     response = tester.post("/course/syllabus")
@@ -341,7 +342,7 @@ def test_change_syllabus_link():
     response = tester.get("/course/syllabus?course_code=TEP281H1")
     assert response.status_code == 200
     link = response.json['link']
-    new_link = link + 1;
+    new_link = link + 1
 
     response = tester.post("/course/syllabus", {link: new_link})
     assert response.status_code == 200
