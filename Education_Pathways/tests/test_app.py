@@ -306,3 +306,46 @@ def test_reviews_addition():
     data = response.get_data(as_text=True)
 
     assert '{\\"first\\": \\"Loren\\", \\"last\\": \\"Ipsum\\", \\"review\\": \\"Good Course\\", \\"rating\\": \\"5\\"}' in data 
+
+
+# Americo
+# Test getting a syllabus info
+# Test if reviews are being saved
+def test_getting_course_info():
+    tester = app.test_client()
+
+    response = tester.get("/course/syllabus?course_code=ECE110H1")
+    assert response.status_code == 200
+
+    data = response.get_data(as_text=True)
+
+    assert '{\\"first\\": \\"Loren\\", \\"last\\": \\"Ipsum\\", \\"review\\": \\"Good Course\\", \\"rating\\": \\"5\\"}' in data 
+
+def test_increase_request_count():
+    tester = app.test_client()
+
+    tester.get("/course/syllabus?course_code=ECE110H1")
+    assert response.status_code == 200
+    request_count = response.json['request_count']
+
+    response = tester.post("/course/syllabus")
+    assert response.status_code == 200
+
+    new_request_count = response.json['request_count']
+
+    assert new_request_count == request_count + 1
+
+def test_change_syllabus_link():
+    tester = app.test_client()
+
+    tester.get("/course/syllabus?course_code=TEP281H1")
+    assert response.status_code == 200
+    link = response.json['link']
+    new_link = link + 1;
+
+    response = tester.post("/course/syllabus", {link: new_link})
+    assert response.status_code == 200
+
+    new_request_link = response.json['link']
+
+    assert new_link == new_request_link
