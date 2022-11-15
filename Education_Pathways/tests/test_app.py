@@ -319,7 +319,7 @@ def test_getting_course_info():
 
     data = response.get_data(as_text=True)
 
-    assert '{\\"first\\": \\"Loren\\", \\"last\\": \\"Ipsum\\", \\"review\\": \\"Good Course\\", \\"rating\\": \\"5\\"}' in data 
+    assert 'ECE110H1' in data 
 
 def test_increase_request_count():
     tester = app.test_client()
