@@ -3,7 +3,7 @@ import axios from 'axios'
 import Result from './Results'
 import './css/Result.css'
 import './css/dropdown.css'
-// import Label from './Label'
+import Label from './Label'
 import "./css/styles.css";
 import qs from "qs";
 import {depOptions} from './DepOptions';

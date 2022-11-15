@@ -13,7 +13,7 @@ const ReviewsComp = (props) => {
       temp += parseInt(props.reviews[i]['rating'])
     }
     setTotalRating(temp)
-  },[setTotalRating, props.reviews])
+  })
 
   return (
     <div className={styles["reviews-comp"]}>
