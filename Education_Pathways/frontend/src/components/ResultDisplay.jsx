@@ -116,7 +116,7 @@ class SearchResultDisplay extends Component{
   }
 
   getData = (input, filterDepartment, filterLevel) => {
-    axios.get(`http://127.0.0.1:5000/searchc`,{
+    axios.get(`https://coursify-ece444.herokuapp.com/searchc`,{
       params: {
         input: input,
         numResults: 5,

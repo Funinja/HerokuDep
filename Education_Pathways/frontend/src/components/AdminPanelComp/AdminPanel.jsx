@@ -30,7 +30,7 @@ export function AdminPanel () {
       setCourseRows(populateRows(requestedCourses));
       return;
     }
-    axios.get(`http://127.0.0.1:5000/api/syllabusList`)
+    axios.get(`https://coursify-ece444.herokuapp.com/api/syllabusList`)
         .then(res => {
           // Unpack and repack since data is recieved without keys to each entry.
           let courses = {...JSON.parse(res.data)}
@@ -49,7 +49,7 @@ export function AdminPanel () {
       setCourseRows(populateRows(allCourses));
       return;
     }
-    axios.get(`http://127.0.0.1:5000/api/syllabusList`, {params:{"get_all": true}})
+    axios.get(`https://coursify-ece444.herokuapp.com/api/syllabusList`, {params:{"get_all": true}})
       .then(res => {
         let courses = {...JSON.parse(res.data)}
         setAllCourses(courses);

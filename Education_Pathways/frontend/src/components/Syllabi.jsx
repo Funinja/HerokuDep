@@ -14,7 +14,7 @@ export class Syllabi extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:5000/course/syllabus`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/syllabus`, {
       params:{
         course_code: this.state.course_code
       },
@@ -39,7 +39,7 @@ export class Syllabi extends Component {
   }
   requestSyllabus = () => {
     axios
-      .post(`http://127.0.0.1:5000/course/syllabus`, {course_code: this.state.course_code,})
+      .post(`https://coursify-ece444.herokuapp.com/course/syllabus`, {course_code: this.state.course_code,})
       .then((res) => {
         let newRequestCount = JSON.parse(res.data).request_count;
         //Redo the getting or increase the count on the front end

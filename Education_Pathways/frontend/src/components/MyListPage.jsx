@@ -28,7 +28,7 @@ class MyListPage extends Component {
       this.setState({ courses: this.state.courses })
     }
 
-    axios.get(`http://127.0.0.1:5000/course/descriptions`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/descriptions`, {
       params: {
         courses: this.state.courses,
       },
@@ -43,7 +43,7 @@ class MyListPage extends Component {
   }
 
   publishList = () => {
-    axios.post(`http://127.0.0.1:5000/api/list`, {
+    axios.post(`https://coursify-ece444.herokuapp.com/api/list`, {
       courses: this.state.courses
     }).then((response) => {
       console.log(response);

@@ -60,7 +60,7 @@ class SearchDisplay extends Component{
   }
 
   getDescriptions = (courses) =>{
-    axios.get(`http://127.0.0.1:5000/course/descriptions`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/descriptions`, {
       params: {
         courses: courses,
         filterDepartment: this.state.filterDepartment,
@@ -112,7 +112,7 @@ class SearchDisplay extends Component{
 
 
   getCodes = async (input, filterDepartment, filterLevel) => {
-    axios.get(`http://127.0.0.1:5000/searchc`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/searchc`, {
       params:{
         input: input, 
         numResults: 10,

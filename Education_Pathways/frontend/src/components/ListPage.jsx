@@ -21,7 +21,7 @@ class ListPage extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:5000/api/list`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/api/list`, {
       params: {
         list_uuid: this.props.match.params.uuid,
       },
@@ -31,7 +31,7 @@ class ListPage extends Component {
     }
     ).then((response) => {
       this.setState({ courses: response.data["course_list"] })
-      axios.get(`http://127.0.0.1:5000/course/descriptions`, {
+      axios.get(`https://coursify-ece444.herokuapp.com/course/descriptions`, {
         params: {
           courses: this.state.courses,
         },

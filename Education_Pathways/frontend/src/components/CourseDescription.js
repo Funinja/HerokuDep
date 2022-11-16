@@ -43,7 +43,7 @@ class CourseDescriptionPage extends Component {
   componentDidMount() {
     console.log("pass in course code: ", this.props.match.params.code);
 
-    axios.get(`http://127.0.0.1:5000/course/descriptions`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/descriptions`, {
       params: {
         courses: [this.props.match.params.code],
       },
@@ -125,7 +125,7 @@ class CourseDescriptionPage extends Component {
 
       })
 
-    axios.get(`http://127.0.0.1:5000/course/reviews`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/reviews`, {
       params:{
         courseCode: this.props.match.params.code,
       },

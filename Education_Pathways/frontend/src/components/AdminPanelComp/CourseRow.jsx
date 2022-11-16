@@ -12,7 +12,7 @@ function CourseRow({course_code, number_requests, syllabus_link}) {
     setShowInput(false);
     setSyllabusLink(data.syllabusURL);
     axios
-      .post(`http://127.0.0.1:5000/course/syllabus`, {course_code: course_code, link: data.syllabusURL})
+      .post(`https://coursify-ece444.herokuapp.com/course/syllabus`, {course_code: course_code, link: data.syllabusURL})
       .then(resp => console.log(JSON.parse(resp.data)))
       .catch((err) => {
         console.log(err);

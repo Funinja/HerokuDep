@@ -33,7 +33,7 @@ const ReviewsForm = (props) => {
   };
 
   const addReview = (firstName, lastName, review, rating) => {
-    axios.get(`http://127.0.0.1:5000/course/addreview`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/addreview`, {
       params: {
         courseCode: props.course_code,
         firstName: firstName,
@@ -48,7 +48,7 @@ const ReviewsForm = (props) => {
   };
 
   const fetchLatestReview = () => {
-    axios.get(`http://127.0.0.1:5000/course/reviews`, {
+    axios.get(`https://coursify-ece444.herokuapp.com/course/reviews`, {
       params:{
         courseCode: props.course_code,
       },
