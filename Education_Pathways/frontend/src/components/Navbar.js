@@ -3,7 +3,7 @@ import './css/navbar.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import logo from './img/uoft_logo.png'
 import { Navbar, Nav } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 // import LogIn from "./LogIn.jsx";
 import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
@@ -12,17 +12,18 @@ import SearchResultDisplay from './ResultDisplay'
 import SearchList from './SearchDisplay'
 import MyListPage from './MyListPage'
 import ListPage from './ListPage'
+import AdminPanel from './AdminPanelComp/AdminPanel';
 
-function CourseDescription(props) {
-  let query = useQuery();
-  return <CourseDescriptionPage code={query.get("code")} />;
-}
+// function CourseDescription(props) {
+//   let query = useQuery();
+//   return <CourseDescriptionPage code={query.get("code")} />;
+// }
 
-function useQuery() {
-  const { search } = useLocation();
+// function useQuery() {
+//   const { search } = useLocation();
 
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
+//   return React.useMemo(() => new URLSearchParams(search), [search]);
+// }
 
 
 export default class NavbarComp extends Component {
@@ -117,6 +118,9 @@ export default class NavbarComp extends Component {
             <Route exact
               path="/list/:uuid"
               render={props => (<ListPage {...props} />)}>
+            </Route>
+            <Route path="/adminPanel">
+              <AdminPanel />
             </Route>
             <Route path="/">
               <SearchResultDisplay />

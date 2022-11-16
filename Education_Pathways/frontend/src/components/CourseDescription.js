@@ -1,19 +1,20 @@
-import React, { Component, useContext } from 'react';
+import React, { Component} from 'react';
 import './css/course-description.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import requisite_label from './img/requisite-label.png'
-import empty_star from './img/star.png'
-import starred from './img/starred.png'
+// import requisite_label from './img/requisite-label.png'
+// import empty_star from './img/star.png'
+// import starred from './img/starred.png'
 import axios from "axios"
 import qs from "qs";
+import Syllabi from './Syllabi';
 
 import ReviewsComp from "./ReviewsComp/ReviewsComp";
 import ReviewsContext from "../context/ReviewsContext";
 
-let star = empty_star;
+// let star = empty_star;
 
 class CourseDescriptionPage extends Component {
 
@@ -21,7 +22,7 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: "",
+      course_code: this.props.match.params.code,
       course_name: "",
       division: "",
       department: "",
@@ -111,10 +112,7 @@ class CourseDescriptionPage extends Component {
 
         this.setState({ exclusions: total_exreq })
 
-        let syllabus_link = "http://courses.skule.ca/course/" + this.props.code
-        this.setState({ syllabus: syllabus_link })
-
-        let temp_graph = [];
+        let temp_graph = []
         //temp_graph.push(<ShowGraph graph_src={this.state.graph}></ShowGraph>)
         
         this.setState({ graphics: temp_graph })
@@ -199,10 +197,8 @@ class CourseDescriptionPage extends Component {
               <p>{this.state.department}</p>
             </Col>
             <Col className="col-item">
-              <h3>Past Tests and Syllabi</h3>
-              <button className={"syllabus-link"} onClick={this.openLink}>
-                View
-              </button>
+              <h3>Course Syllabus</h3>
+              <Syllabi course_code={this.state.course_code}/>
             </Col>
           </Row>
           <Row className="col-item course-description">
