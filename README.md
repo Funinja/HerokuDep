@@ -1,5 +1,5 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8529947&assignment_repo_type=AssignmentRepo)
-# Coursify - A Course Planning Tool
+# Coursify - A Course Planning Tool (Outdated)
 ## Project Management
 Jira is used in order to manage our project, and can be found [HERE](https://ece444team5.atlassian.net/jira/software/projects/CRS/boards/1). In order to access, you must be signed in using a utoronto.ca account.
 
